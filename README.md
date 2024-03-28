@@ -4,6 +4,9 @@
 
 ### EBS Volume:
 
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/67bfc707-8178-4e6d-9e60-1301ed525e91)
+
+
 * A EBS (Elastic Block Storage) Volume is a network drive that you can attach to your instances while they run.
 * It Allows your instances to persist data, even after termination.
 * They can only be mounted to one instance at a time.
@@ -30,6 +33,7 @@ It's mainly used to get data back from a instance that stoped into a new instanc
   If you want to preser the data from root when it's terminated we need to disable this attribute.
 
   #### EBS Snapshots
+
   * Make a backup (snapshot) of your EBS volume at a point in time.
   * Not necessary to detach volume to do snapshot, but it is recommended.
   * Can copy snapshots across AZ or Regions.
@@ -53,5 +57,15 @@ It's mainly used to get data back from a instance that stoped into a new instanc
      * Force full initialization of snapshot to have no latency on the first use (very expensive $$$).
     
    **We can create volume from snapshots.**
+
+* Creating a snapshot:
+   ![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/83aeab4b-6d76-4268-855a-bd10484c99f4)
+
+  ![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/31504424-2cbf-4a87-bc56-96f273d60779)
+
+  * Copying a sanpshot:
+    ![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/a787a17e-91c4-48ea-a05a-2b469104a5e7)
+
+
 
 
