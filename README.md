@@ -118,6 +118,7 @@ It's mainly used to get data back from a instance that stoped into a new instanc
   * Apps must manage concurrent write operations.
 * Up to 16 EC2 instances at a time.
 * Must use a file system that's cluster-aware (not XFS, EXT4, ...)
+
 ![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/267ffcaf-9050-4938-8719-445e6b73a9f0)
 
 ### EFS - Elastic File System
