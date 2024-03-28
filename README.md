@@ -51,5 +51,7 @@ It's mainly used to get data back from a instance that stoped into a new instanc
 
    * Fast Snapshot Restore (FSR)
      * Force full initialization of snapshot to have no latency on the first use (very expensive $$$).
+    
+   **We can create volume from snapshots.**
 
 
