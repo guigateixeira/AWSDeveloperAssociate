@@ -324,5 +324,6 @@ The application servers don't see the IP of the client directly.
 Target Groups:
 * EC2 instances.
 * IP Addresses - must be private IPs.
+* Health Checks support the TCP, HTTP and HTTPS Protocols.
 
 ![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/54a068ac-90e6-46ff-a681-c8b669f30d7f)
