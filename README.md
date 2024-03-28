@@ -286,3 +286,24 @@ Some load balancers can be setup as internal (private) or external (public) ELBs
   * Routing based on Query String, Headers (example.com/users?**id=123&order=false**).
 * ALB are a great fit for micro services & container-based application (Docker, Amazon ECS, ...).
 * Has a port mapping feature to redirect to a dynamic port in ECS.
+
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/9a8bea97-3a59-4d5c-81e3-a7a3e81d6878)
+
+ALB - Target Grouprs:
+* EC2 instances (can be managed by an Auto Scaling Group) - HTTP.
+* ECS tasks (managed by ECS itself) - HTTP.
+* Lambda functions - HTTP request is translated into a JSON event.
+* IP Addresses - must be private IPs.
+* ABL can route to multiple target groups.
+* Health checks are the target group level.
+
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/52c0b41a-ab55-4ae8-b34c-83c2ccf55034)
+
+The application servers don't see the IP of the client directly.
+* The true IP of the client is inserted in the header `X-Forwarded-For`.
+* We can also get the port (`X-Forwarded-Port`) and proto (`X-Forwarded-Proto`).
+
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/0e759a53-7d2e-448d-8f79-24baf9aac173)
+
+
+
