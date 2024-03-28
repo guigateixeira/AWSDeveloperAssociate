@@ -18,3 +18,6 @@ It's mainly used to get data back from a instance that stoped into a new instanc
 * It's locked to an AZ, and to move a volume across, you need to snapshopt it.
 
 * Have a provisioned capacity (size in GBs and IOPS).
+
+  ![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/9491a634-4c74-4724-8244-00c1a3b46bae)
+
