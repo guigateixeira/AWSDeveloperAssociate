@@ -175,7 +175,8 @@ It's mainly used to get data back from a instance that stoped into a new instanc
   * Only for Linux Instances (POSIX).
   * EFS has a higher price point than EBS.
   * Can leverage EFS-IA for cost savings.
- ![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/6f9af980-cf16-4c17-899f-d0059f20a87f)
+
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/6f9af980-cf16-4c17-899f-d0059f20a87f)
 
 
  ### AMI (Amazon Machine Image)
