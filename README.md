@@ -155,3 +155,50 @@ It's mainly used to get data back from a instance that stoped into a new instanc
   * Standard: Multi-AZ, great for prod.
   * One Zone: One AZ, great for dev, backup enabled by default, compatible with IA (EFS One Zone-IA).
 ![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/3874ebb4-7374-4616-979f-828f8c663b53)
+
+### EBS vs EFS
+* EBS Volumes:
+  * One instance at a time (except multi-attach io1/io2).
+  * Are locked at AZ level.
+  * gp2: IO increases if the disk size increases.
+  * gp3 & io1:  can increase IO independently.
+* To migrate an EBS volume across AZ:
+  * Take a snapshot.
+  * Restore the snapshot to another AZ.
+  * EBS backup use IO abd you shouldn't run them while the application is handling a lot of traffic.
+* Root EBS Volumes of instances get terminated by default if the EC2 instance gets terminated (can be disabled).
+  ![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/26a2f0b1-a34d-4011-b953-a27de81742a2)
+
+* EFS:
+  * Mounting in 100s of instances across AZ.
+  * EFS shares website files.
+  * Only for Linux Instances (POSIX).
+  * EFS has a higher price point than EBS.
+  * Can leverage EFS-IA for cost savings.
+ ![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/6f9af980-cf16-4c17-899f-d0059f20a87f)
+
+
+ ### AMI (Amazon Machine Image)
+ * AMI are customization of an EC2 instance.
+   * You add your own software, configuration, OS, monitoring.
+   * Faster boot / configuration time because all of the software is pre-package.
+* AMI are built for a specif region (and can be copied across regions).
+* Can launch EC2 instances from:
+  * Public AMI: AWS provided.
+  * Your own AMI: you make and maitain yourself.]
+  * an AWS marketplace AMI: an AMI someone else made.
+
+ AMI Process
+  - Start an EC2 instance and customize it.
+  - Stop the instance (for data integrity).
+  - Build an AMI - this will also create EBS snapshots.
+  - Launch instances from other AMIs.
+
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/e2311ed4-bfe2-4e43-933a-10f5b969b934)
+
+----
+
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/f25eed95-7132-4b9c-a7c4-6e5da1fa0732)
+
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/42655e2a-b88e-4a60-a9d4-6a4a28390700)
+
