@@ -2,7 +2,7 @@
 
 ## Section 6: EC2 Instance Storage
 
-EBS Volume:
+### EBS Volume:
 
 * A EBS (Elastic Block Storage) Volume is a network drive that you can attach to your instances while they run.
 * It Allows your instances to persist data, even after termination.
@@ -20,4 +20,12 @@ It's mainly used to get data back from a instance that stoped into a new instanc
 * Have a provisioned capacity (size in GBs and IOPS).
 
   ![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/9491a634-4c74-4724-8244-00c1a3b46bae)
+
+  Delete on Terminate:
+
+  Controls the EBS behaviour when an EC2 instance terminates
+  * By default, the root EBS volume is deleted (enabled).
+  * By default, any other attached EBS volume is not deleted.
+ 
+  If you want to preser the data from root when it's terminated we need to disable this attribute
 
