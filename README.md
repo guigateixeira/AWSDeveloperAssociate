@@ -19,7 +19,7 @@ It's mainly used to get data back from a instance that stoped into a new instanc
 
 * Have a provisioned capacity (size in GBs and IOPS).
 
-  ![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/9491a634-4c74-4724-8244-00c1a3b46bae)
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/9491a634-4c74-4724-8244-00c1a3b46bae)
 
   Delete on Terminate:
 
@@ -27,5 +27,29 @@ It's mainly used to get data back from a instance that stoped into a new instanc
   * By default, the root EBS volume is deleted (enabled).
   * By default, any other attached EBS volume is not deleted.
  
-  If you want to preser the data from root when it's terminated we need to disable this attribute
+  If you want to preser the data from root when it's terminated we need to disable this attribute.
+
+  #### EBS Snapshots
+  * Make a backup (snapshot) of your EBS volume at a point in time.
+  * Not necessary to detach volume to do snapshot, but it is recommended.
+  * Can copy snapshots across AZ or Regions.
+ 
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/5f9223c3-408d-499f-8f06-cc786baa7573)
+
+  EBS Snapshots Features:
+  * EBS Snapshot Archive:
+    * Move Snapshot to an "archive tier" that is 75% cheaper.
+    * Takes 24 to 72 hours for restoring the archive.
+
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/1177116e-935d-42c9-b217-c5f4dc1380a7)
+
+  * Recycle Bin for EBS Snapshots
+    * Setup rules to retain deleted snapshots so you can recover them afyer an accidental deletion.
+    * Specific retation (from 1 day to 1 year).
+
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/710514aa-5cee-4a72-a570-009d4f3c23bf)
+
+   * Fast Snapshot Restore (FSR)
+     * Force full initialization of snapshot to have no latency on the first use (very expensive $$$).
+
 
