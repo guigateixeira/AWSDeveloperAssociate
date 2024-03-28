@@ -4,7 +4,17 @@
 
 EBS Volume:
 
-* A EBS (Elastic Block Storage) Volume is a netowkr drive that you can attach to your instances while they run.
+* A EBS (Elastic Block Storage) Volume is a network drive that you can attach to your instances while they run.
 * It Allows your instances to persist data, even after termination.
 * They can only be mounted to one instance at a time.
-* They are bounded to a specific availability zone (Can't put a es-east-1a EBS to a instance in es-east-1b).
+* They are bounded to a specific availability zone (Can't put a us-east-1a EBS to a instance in us-east-1b).
+
+It's mainly used to get data back from a instance that stoped into a new instance. (It's almost like a "network USB stick)
+
+* It's a network drive (not a physical drive).
+  * It uses the network to communicate the instance, which means there might be a bit of latency.
+  * It can be detached from a EC2 instance and attached to another one quickly. (Makes its handy to do fails-over)
+ 
+* It's locked to an AZ, and to move a volume across, you need to snapshopt it.
+
+* Have a provisioned capacity (size in GBs and IOPS).
