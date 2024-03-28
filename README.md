@@ -271,3 +271,18 @@ Types of LB on AWS:
 * Gateway Load Balancer - GWLB
   * IP Protocol.
 Some load balancers can be setup as internal (private) or external (public) ELBs.
+
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/50bfa335-f3ea-459c-8795-7ce0c11bdca0)
+
+#### Application Load Balancer (v2)
+* Application load balancers ins Layer 7 (HTTP).
+* Load balancing to multiple HTTP applications across machines (target groups).
+* Load balancing to multiple applications on the same machine (containers).
+* Support for HTTP/2 and WebSocket.
+* Support redirects (from HTTP to HTTPS example).
+* Routing tables to different target groups:
+  * Routing based on path in URL (ex: example.com/**users** & example.com/**posts**).
+  * Routing based on hostname in URL (ex: one.example.com & other.example.com).
+  * Routing based on Query String, Headers (example.com/users?**id=123&order=false**).
+* ALB are a great fit for micro services & container-based application (Docker, Amazon ECS, ...).
+* Has a port mapping feature to redirect to a dynamic port in ECS.
