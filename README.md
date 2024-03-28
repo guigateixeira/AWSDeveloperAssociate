@@ -309,3 +309,20 @@ The application servers don't see the IP of the client directly.
 ![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/4c86fd7c-a6dc-408d-876c-5c02003c1cf3)
 
 **When creating a APL we should change the security groups of the instances itself, to only accept traffic from the APL and not from the whole internet.**
+
+#### Network Load Balancer (v2)
+* Network load balancers (Layer 4) allow to:
+  * Dowards TCP & UDP traffic to your instances.
+  * Handle millions of request per seconds.
+  * Less latency ~100 ms (vs 400 ms for ALB).
+* NLB has one static IP per AZ, and supports assigning Elastic IP.
+* NLB are used for extreme performance, TCP or UDP traffic.
+* Not included in AWS free tier.
+
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/a43dc823-09f7-4a0c-bfae-ec710fd9ab27)
+
+Target Groups:
+* EC2 instances.
+* IP Addresses - must be private IPs.
+
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/54a068ac-90e6-46ff-a681-c8b669f30d7f)
