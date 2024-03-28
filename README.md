@@ -230,3 +230,44 @@ It's mainly used to get data back from a instance that stoped into a new instanc
 * The goal is to survive a data center loss.
 * Can be passive (for RDS Multi AZ).
 * Can be active (for horizontal scaling).
+
+**Load Balance**
+* Load Balances are servers that fowards traffic to multiple servers (EC2 instances, ...) downstream.
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/c3a9734f-964e-4a2d-b718-2d31fac6c62a)
+The users MUST NOT know the difference of instances that they are connected.
+
+Why use load balance?
+* Spread load across multiple downstream instances.
+* Expose a single point of access (DNS) to your application.
+* Seamleslly handle failures of downstream instances.
+* Do regular helath check to your instances.
+* Provide SSL termination (HTTPS) for your websites.
+* Enforce stickiness with cookies.
+* High availability across zones.
+* Separate public traffic from private traffic.
+
+**ELB**
+* Elastic Load Balancer is a managed load balancer.
+  * AWS guarantees that it will be working.
+  * AWS takes care of upgrades, maintenance, high availability.
+  * AWS provides only a few configuration knobs.
+* It cost less to setup your own load balance, but it's a lot of effort to maintain.
+* It's integrated with many AWS services (EC2, EC2 ASG, CloudWatch, Route 53, WAF, ...).
+
+ Health Checks:
+ * Health Checks are crutial for Load Balancers.
+ * They enable the LB to know if instances it fowards traffic to are available to reply to requests.
+ * The check is done on a port and route (`/health` is common).
+ * If the response is not `200`, then the instance is unhealthy, and will not send traffic to that instance.
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/3e7dbd44-308a-4eed-9a94-e56dfff8475c)
+
+
+Types of LB on AWS:
+* Classic Load Balancer - CLB: (v1 - depricated).
+* Application Load Balancer - ALB: (v2 - new generation)
+  * HTTP, HTTPS, WebSocket.
+* Network Load Balancer - NLB: (v2 - new generation)
+  * TCP, TLS, UDP.
+* Gateway Load Balancer - GWLB
+  * IP Protocol.
+Some load balancers can be setup as internal (private) or external (public) ELBs.
