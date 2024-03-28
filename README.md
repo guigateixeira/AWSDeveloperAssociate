@@ -63,7 +63,7 @@ It's mainly used to get data back from a instance that stoped into a new instanc
 
   ![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/31504424-2cbf-4a87-bc56-96f273d60779)
 
-* Copying a sanpshot:
+* Copying a snapshot:
   ![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/a787a17e-91c4-48ea-a05a-2b469104a5e7)
 
 #### EBS Volume Types
@@ -77,7 +77,7 @@ It's mainly used to get data back from a instance that stoped into a new instanc
 * EBS Volumes are caracterized in Size | Throughput | IOPS (I/O Ops Per Sec)
 * **Only gp2/gp3 amd io1/io2 Block Express can be usedas boot volumes.**
 
-###### GP SSD
+##### GP SSD
 * Cost effective stogae, low-latency.
 * System boot volumes, virtual desktops, development and test envs.
 * 1GiB - 16GiB.
