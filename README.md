@@ -202,3 +202,30 @@ It's mainly used to get data back from a instance that stoped into a new instanc
 
 ![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/42655e2a-b88e-4a60-a9d4-6a4a28390700)
 
+------------------
+------------------
+
+## Section 7: ELB (Elastic Load Balancer) + ASG (Auto Scaling Group)
+
+* Scalability means that an application/system can handle greater loads by adapting.
+* There are 2 kinds o scalability:
+  * Vertical Scalability.
+  * Horizontal Scalability (= elasticity).
+* Scalability is linked, but it's different to High Availability.
+
+**Vertical Scalability**
+* If your application runs in a t2.micro, scalling vertically menas runninf in a t2.large.
+* Vertical scalability is very common for non distributed systems, such as databases (RDS, ElastiCache).
+* The limits of how much you can scale is up to a hardware limit.
+
+**Horizontal Scalability**
+* Means increasing the number of instances/systems for your application.
+* Horizontal scaling implies distributed systems.
+* Common for web apps and modern apps.
+* Easy to do because of Amazon EC2.
+
+**High Availability**
+* High availability menas running your app in at least 2 sata centers (AZs),
+* The goal is to survive a data center loss.
+* Can be passive (for RDS Multi AZ).
+* Can be active (for horizontal scaling).
