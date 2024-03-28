@@ -305,5 +305,7 @@ The application servers don't see the IP of the client directly.
 
 ![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/0e759a53-7d2e-448d-8f79-24baf9aac173)
 
+-------
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/4c86fd7c-a6dc-408d-876c-5c02003c1cf3)
 
-
+**When creating a APL we should change the security groups of the instances itself, to only accept traffic from the APL and not from the whole internet.**
