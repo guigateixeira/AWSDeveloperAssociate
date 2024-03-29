@@ -396,3 +396,75 @@ This is done to make sure the user doesn't lose his session data, but it's good 
 * Public SSL certificates are issued by Certificate Authorities (CA).
 * SSL certificates have a expiration date and must be renewed.
 
+**Load Balancer - SSL Certificates**
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/afc18141-1d45-4113-9d9a-4ce8bb74feb4)
+* The load balancer uses an X.509 certificate (SSL/TLS server certificate).
+* You can manage certificates using ACM (AWS Certificate Manager).
+* You can create upload yur own certificates alternatively.
+* HTTPS listener:
+  * Must specify a default certificate.
+  * You can add an optional list of certs to support multiple domains.
+  * Clients can use SNI (Server Name Indication) to specify the hostname they reach.
+  * Ability to specify a security policy to support older version of SSL/TLS.
+ 
+##### Server Name Indication (SNI)
+* SNI solves the problem of loading mutiple SSL certificates onto one web server (to serve multiple websites).
+* It's a newer protocol, and requires the client to indicate the hostname of the target server in the initial SSL handshake.
+* The server will the find the correct certificate, or return the dafault one.
+
+**This only wokrs for ALB, NBL and ClouldFront**
+
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/25faf464-1533-42f4-924c-8de9d4e402cd)
+
+---------
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/7dd26c61-2a8b-47c8-bebe-d69ed320d0c6)
+
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/d7341a4c-fc89-4548-a7e4-5c0772e5639d)
+----------
+##### Connection Draining or Deregistration Delay
+* Time to complete "in-flight requests" while the instance is de-registering or unhealthy.
+* Stop sending new requests to the RC2 instances which is de-registering.
+* Between 1 to 3600 seconds (default: 300).
+* Can be disabled if set to 0.
+* Set to a low value if your requests are short.
+
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/8b3e87f3-a5b7-4a14-97c1-b5c2badd993d)
+
+---------
+### Auto Scaling Group (ASG)
+* In real-fife, the load on your websites and app can change.
+* In the cloud, you can create and get rid of servers very quickly.
+
+The goal of an ASG is:
+* Scale out (add EC2 instances) to match an increased load.
+* Scale in (remove EC2 instances) to match a decreases load.
+* Ensure we have a minimum ans a maximum number of EC2 instances running.
+* Automatically register new instances to a load balancer.
+* Re-create an EC2 instance in case a previous one is terminated (ex. if unhealthy).
+
+ASG are free, you only pay for the EC2 instances.
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/85c71994-d58a-4f6b-b93e-12ccd0b7cdcd)
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/2a1ae54a-5fdb-4495-86e1-20122b24189f)
+
+**Launch Template:**
+* AMI + Instance Type
+* EC2 User Data
+* EBS Volumes
+* Security Groups
+* SSH Key Pair
+* IAM Roles for your EC2 Instances
+* Network + Subnets Information
+* Load Balancer Information
+Min size / Max size / Initial Capacity.
+Scaling policies.
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/696a01e1-da22-4f1e-aaea-15d6927501ef)
+
+Scaling:
+* It's possible to scale an ASG based on CloudWatch alarms.
+* An alarm monitors a metric (such as CPU, or a custom metric).
+* Metrics such as Average CPU are computed for the overall ASG instances.
+* Based on alarms:
+  * We can create scale-out policies (increase the number of instances)
+  * We can create scale-in policies (decrease the number of instances)
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/19734d67-7481-46c4-a230-120bc17e251d)
+--------
