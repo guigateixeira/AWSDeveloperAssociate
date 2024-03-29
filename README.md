@@ -472,3 +472,38 @@ Scaling:
   * We can create scale-in policies (decrease the number of instances)
 ![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/19734d67-7481-46c4-a230-120bc17e251d)
 --------
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/0f2fd7bb-0f32-48ac-81ce-42f052fe0619)
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/03f1f196-4aa7-4220-a894-19c22517515d)
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/cedea1b3-479a-4240-89b6-169fd1c304cc)
+--------
+#### Scaling Policies
+* Dynamic Scaling
+  * Target Tracking Scaling
+    * Simple to set-up.
+    * Ex: want the average ASG CPU to stay around 40%.
+  * Simple / Step Scaling
+    * When a CloudWatch alarm is triggered (ex. CPU > 70%), then add 2 units.
+    * When a CloudWatch alarm is triggered (ex. CPU < 30%), then remove 1 unit.
+* Schedule Scaling
+  * Anticipate a scaling based on known usage patterns.
+  * Ex: increse the min capacity to 10 at 5pm on Fridays.
+* Predictive Scaling: continuiusly forecast load and schedule scaling ahead.
+
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/af539482-da6f-495e-b02c-067a2d212fd5)
+
+Best metrics to scale on:
+* CPU Utilization.
+* Request Count Per Target.
+* Average Network In/Out.
+* Custom metrics from CloudWatch.
+ 
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/5481c39c-2e80-4ca5-aee3-3551197027b8)
+
+
+Scaling Cooldowns:
+* After a scaling activity happens, you are in the cooldown period (default 300s).
+* During the cooldown period, the ASG will not launch or terminate additional instance (to allow the metrics to stabilize).
+
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/2838cf1a-9f31-47e7-ac81-ef5660455960)
+
+Use a ready-to-use AMI to reduce configuration time in order to be serving requests faster and reduce the cooldown period.
