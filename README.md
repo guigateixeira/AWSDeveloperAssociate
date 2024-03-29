@@ -356,6 +356,7 @@ Target Groups:
 * The cookie used for stickness has an expiration date you control.
 
 This is done to make sure the user doesn't lose his session data, but it's good to keep in mind that enabling this may bring imbalance to the load over the backend EC2 instances.
+
 ![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/8a2eb120-d516-4212-957c-f6c2855118a5)
 
 ###### Cookie Names:
