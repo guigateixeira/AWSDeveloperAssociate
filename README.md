@@ -455,8 +455,11 @@ ASG are free, you only pay for the EC2 instances.
 * IAM Roles for your EC2 Instances
 * Network + Subnets Information
 * Load Balancer Information
+
 Min size / Max size / Initial Capacity.
+
 Scaling policies.
+
 ![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/696a01e1-da22-4f1e-aaea-15d6927501ef)
 
 Scaling:
