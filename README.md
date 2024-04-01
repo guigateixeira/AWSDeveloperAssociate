@@ -507,3 +507,28 @@ Scaling Cooldowns:
 ![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/2838cf1a-9f31-47e7-ac81-ef5660455960)
 
 Use a ready-to-use AMI to reduce configuration time in order to be serving requests faster and reduce the cooldown period.
+
+-------
+<img width="1700" alt="image" src="https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/19bb35a8-91f9-4918-aa8f-01867bf3b087">
+<img width="855" alt="image" src="https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/077050f5-b743-4508-bb33-d54349b2a81b">
+
+----
+
+<img width="1231" alt="image" src="https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/fa208737-9244-4cf8-8d89-f90d11429543">
+
+----
+<img width="1308" alt="image" src="https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/2fa3ebc1-1e45-473b-8695-f6a387497f84">
+<img width="1098" alt="image" src="https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/53af6413-2aca-467d-9ab1-65b26450af60">
+
+-------
+#### Auto Scaling - Instance Refresh
+* Update launch template and then re-launch EC2 instances.
+* Use the native Instance Refresh.
+* Setting minimum healthy percentage.
+* Specify warm-up time (how long until the instances are ready to use).
+
+<img width="746" alt="image" src="https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/64b728c3-7a80-4c08-a0a7-960f94a48912">
+
+
+
+
