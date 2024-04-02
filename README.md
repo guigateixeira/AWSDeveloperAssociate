@@ -529,6 +529,79 @@ Use a ready-to-use AMI to reduce configuration time in order to be serving reque
 
 <img width="746" alt="image" src="https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/64b728c3-7a80-4c08-a0a7-960f94a48912">
 
+-----
+## Section 5: AWS Fundamentals - RDS + Aurora + ElastCache
+### RDS Overview
+* RDS stands for Relational Database Service.
+* It's a managed DB service for DB use SQL as a query language.
+* It allows you to create DBs in the cloud that are managed by AWS (Postgres, MySQL, Oracle, ...)
 
+RDS is a managed service:
+* Automated provisioning, OS patching.
+* Countinuos backup and restore to specific timestamp (Point in Time Restore).
+* Monitoring dashboards.
+* Read replicas for improved read performance.
+* Multi AZ setup for disaster recovery.
+* Maintance windows for upgrades.
+* Scaling capability (vertical and horizontal).
+* Storage backed bt EBS (gp2 or io1).
+**Can't access via SSH.**
 
+#### RDS - Storage Auto Scaling
+* Helps you increase storage om your RDS DB instance dynamically.
+* When RDS detects you are running out of free database storage, it scales automatically.
+* Avoid manually scaling your database storage.
+* You have to set Maximum Storage Threshod (maximum limit for DB storage).
+* Automatically modify storage if:
+  * Free storage is less than 10% of allocated storage.
+  * Low-storage lasts at least 5 minutes.
+  * 6 hours have passed since last modification.
+* Useful for applications with unpredictable workloads.
+* Supports all RDS databases engines.
 
+ ![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/d484c20e-7146-4859-b9b1-dba770f11330)
+
+#### RDS Read Replicas for read scalability
+* Up to 15 Read Replicas.
+* Within AZ, Cross AZ or Cross Region.
+* Replication is ASYNC, so reads are eventually consistent (you can be reading old data).
+* Replicas can be promoted to their own DB.
+* Applications must update the connection string to leverage read replicas.
+
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/e09c232a-0157-430f-9e5b-024ef1264f97)
+
+**Example use case**
+* You have a production DB that is taking normal load.
+* You want to run a reporting application to run some analytics.
+* You create a Read Replica to run the new workload there.
+* The production application is unaffected.
+* Read replicas are only used for SELECT statements.
+
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/c8bff1c7-111a-4b28-99a7-1d33912cb1c1)
+
+##### RDS Read Replicas - Network Cost
+* In AWS there's a network cost when data goes from one AZ to another.
+* **For RDS Read Replicas within the same region, you don't pay taht fee.**
+
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/85259561-b55c-4e63-a1b4-d6b87bc1ee30)
+
+##### RDS Multi AZ (Disaster Recovery)
+* SYNC Replication.
+* One DNS name - automatic app failover to standby.
+* Increase availability.
+* Failover in case of loss of AZ, loss of network, instance or storage failure.
+* No manual intervention in apps.
+* Not used for scaling.
+* Note: The Read Replicas be setup as Multi AZ for Disaster Recovery (DR).
+
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/f336b84f-9c34-4c50-b0d3-5e4054eaf5d9)
+
+#### RDS - From Single-AZ to Multi-AZ
+* Zero downtime operation (no need to stop the DB).
+* Just click in "modify" for the database.
+* The following happens internally:
+  * A snapshot is taken.
+  * A new DB is restored from the snapshot in a new AZ.
+  * Synchronization is established between the two databases.
+
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/81c76da2-4c14-47db-9813-d49e62ba6478)
