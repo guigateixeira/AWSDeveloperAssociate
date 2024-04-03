@@ -731,5 +731,37 @@ RDS is a managed service:
 
 ![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/c0ae2fc5-ddf4-47e4-a4dd-f476f9f035ce)
 
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/10dcc78a-227b-4716-8652-8c5ad8503080)
 
+-------
+### Cache Implementations:
+* Data in cache may be out of date, eventually is consistent.
+* Caching is efective for data changing slowly, few keys are frequently needed.
+* Data structured for cache, for example a key value caching, or caching of aggregations results.
 
+#### Lazy Loading:
+* Pros:
+  * Only requested data is cached (the cache isn't filled up with unused data).
+  * Node failures are not fatal (just increase latency to warm the cache).
+* Cons:
+  * Cache miss penalty that results in 3 round trips, noticeable delay for that request.
+  * Stale data: data can be updated in the database and outdated in cache.
+
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/6c466b22-dd5e-4119-a7aa-60f3534f1fde)
+
+Example code for Lazy Loading:
+```
+async getUser(userId: string): Promise<User> {
+  let user = await cache.get(userId);
+
+  if(user === null || user === undefined) {
+    user = await db.query("SELECT * FROM users WHERE id = ?", userId);
+    if(user === null || user === undefined) {
+      return null;
+    }
+    await cache.set(userId, user);
+  }
+  return user;
+}
+```
+#### 
