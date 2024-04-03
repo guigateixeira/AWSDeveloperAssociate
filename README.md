@@ -863,4 +863,48 @@ async saveUser(userRequest: UserRequest): Promise<User> {
 
 ![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/e06147ae-0ac1-4dbc-954a-f257d06a4627)
 
+#### Records TTL
+* High TTL - ex. 24hrs
+  * Less trafic on Route 53.
+  * Possibily outdated records.
+* Low TTL - ex. 60sec
+  * More traffic on Route 53 ($$$).
+  * Records are outdated for less time.
+  * Easy to change records.
+* Except for Alias records, TTL is mandatory for each DNS record. 
+
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/e6375c04-9e4d-41d7-a11b-5ebb2a027788)
+
+#### CNAME vs Alias
+* AWS Resources (Load Balancer, CloudFront ...) expose an AWS hostname:
+  * 1b1-123.us-east-1.elb.amazonaws.com and you want myapp.mydomain.com
+
+* CNAME:
+  * Points a hostname to any other hostname. (app.mydomain.com => anything.something.com).
+  * ONLY FOR NON ROOT DOMAIN (aka something.mydomain.com).
+* Alias:
+  * Points a hostname to an AWS Resource (app.mydomain.com => anything.amazonaws.com).
+  * WORKS for ROOT DOMAIN and NON ROOT DOMAIN (aka mydomain.com).
+  * Free of charge.
+  * Native health check.
+
+##### Alias Records
+* Maps a hostname to an AWS resource.
+* An extension to DNS functionality.
+* Automatically recognizes changes in the resource's IP addresses.
+* Unlike CNAME, it can be used for top node of a DNS namespace.
+* Alias Record is always type A/AAAA for AWS resources (IPv4 / IPv6).
+
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/14eb8920-d3d1-4eb5-b077-38a25de675f2)
+
+**Aliad Records Targets:**
+* Elastic Load Balancers.
+* CloudFront Distribution.
+* API Gateway.
+* Elastic Beanstalk environments.
+* S3 Websites.
+* VPC Interfaces Endpoints.
+* Global Accelerator.
+* Route 53 records in the same hosted zone.
+**YOU CANNOT SET AN ALIAS RECORS FOR AN EC2 DNS NAME**
 
