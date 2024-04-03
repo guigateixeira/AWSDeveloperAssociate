@@ -805,3 +805,62 @@ async saveUser(userRequest: UserRequest): Promise<User> {
 
 ![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/f3f8edd5-2e30-4e4a-8431-98ec38a5c044)
 
+---------
+
+## Section 6: Route 53
+### DNS
+* Domain Name System (DNS) which transalates the humain friendly hostnames into the machine IP addresses (www.google.com -> 108.207.17.36).
+* DNS uses hierarchical naming structure.
+* Domain Registrar: Amazon Route 53, ...
+* DNS Records: A, AAAA, CNAME, ...
+* Zone File: contains DNS records.
+* Name Server: resoplves DNS queries (Authoritative or Non-Authoritative).
+* Top Level Domain (TLD): .com, .in, .gov, .org, ...
+* Second Level Domain (SLD): amazon.com, ...
+
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/78217cbc-32fe-49bd-b34a-da5b0db5c054)
+
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/6b2e28cd-59be-4b6c-8652-3e3da3637583)
+
+### Amazon Route 53
+* Highly available, scalable, fully managed and Authoritative (the customer can update the DNS records) DNS.
+* Route 53 is also a Domain Registrar.
+* Ability to check teh health of your resources.
+* The only AWS service which provides 100% availability SLA.
+
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/34373225-21cb-4edb-acf1-cb4c2b085e1d)
+
+#### Records
+* How you want to route traffic for a domain.
+* Each record contains:
+  * Domain/subdomain Name - ex. example.com
+  * Record Type: ex. A or AAAA
+  * Value: ex. 127.213.12.1
+  * Routing Policy: how Route 53 responds to queries.
+  * TTL: amount of time the record cached at DNS Resolvers.
+* Route 53 suppports the following DNS types:
+  * A / AAAA / CNAME / NS
+  * CAA / DS / MX / NAPTR / PTR / ... (advanced)
+
+**Record Types:**
+ * A - maps a hostname to IPv4
+ * AAAA - maps a hostname to IPv6
+ * CNAME - maps a hostname to another hostname
+   * The target is a domain name which must have an A or AAAA recors.
+   * Can't create a CNAME record for the top node of a DNS namespace (Zone Apex).
+   * Example: you can't create for example.com, but you can create for www.example.com
+* NS - Name Servers for the Hosted Zone
+  * Controll how traffic is roputed for a domain.
+ 
+**Hosted Zones**
+* A container for records that define how to route traffic to a domain and it's subdomains.
+* Public Hosted Zones - contains records that specify how to route traffic on the internet (public domain names).
+* Private Hosted Zones - contains records that specify how you route traffic within one or more VPCs (private domain names).
+
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/b457c3ff-f9a0-46f9-9920-ccd48e568fed)
+------
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/1aac525e-9385-4cdc-b957-f9b056dd2f36)
+
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/e06147ae-0ac1-4dbc-954a-f257d06a4627)
+
+
