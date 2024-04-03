@@ -605,3 +605,131 @@ RDS is a managed service:
   * Synchronization is established between the two databases.
 
 ![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/81c76da2-4c14-47db-9813-d49e62ba6478)
+
+-------
+
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/7985353f-a2ab-408a-a461-19a518c4b49f)
+
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/4e025806-31c7-4521-9bc4-5cd499cb7f14)
+
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/b1c8fe43-fa97-47e6-ac46-b36f2482d4d3)
+
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/1513ebb4-3639-4626-b011-8aad412e3021)
+
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/bf5c6306-6d46-4817-9eac-8805a6085d6d)
+
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/a11291bc-78c8-4673-8614-b695c3617643)
+
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/7bf85bab-b30d-46d9-a0b3-4610e3594dff)
+
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/db822d4b-2707-4342-bce6-bda0439bc495)
+
+-----------
+### Amazon Aurora
+* Aurora is a proprietary tech from AWS (not open source).
+* Postgres and MySQL are both supported as Aurora DB (that means your drivers will wokr as if Aurora was a Postgres or MySQL DB).
+* Aurora is "AWS cloud optimized" and claims 5x performance improvement over MySQL on RDS, over 3x the performance of Postgres on RDS.
+* Aurora storage automatically grows in increments of 10GB, up to 128TB.
+* Aurora can have up to 15 replicas and the replication process is faster than MySQL (sub 10ms replica lag).
+* Failover in Aurora is instantaneous. It's High Availability native.
+* Aurora costs more than RDS (20% more) - but it's more efficient.
+
+#### Aurora - High Availability and Read Scaling
+* 6 copies of your data across 3 AZ:
+  * 4 copies out of 6 needed for writes.
+  * 3 copies out of 6 needed for reads.
+  * Self healing with peer-to-peer replication.
+  * Storage is striped across 100s of volumes.
+* One Aurora Instance takes writes (master).
+* Automated failover for master in less than 30 seconds.
+* Master + up to 15 Aurora Read Replicas serve reads.
+
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/4f8aae52-b7a3-4ee1-818d-5c7cff8e0659)
+
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/e0dd5c7a-99f1-434f-9915-47c5a9864b6b)
+
+**Features of Aurora**
+* Automatic fail-over.
+* Backup and Recovery.
+* Isolation and security.
+* Industry compliance.
+* Push-button scaling.
+* Automated Patching with Zero Downtime.
+* Advanced Monitoring.
+* Routine Maintenance.
+* Backtrack: restore data at any point of time without using backups.
+
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/556a53ac-904e-4b0b-ad7e-c331c40bf2db)
+
+### RDS & Aurora Security
+* At-rest encryption:
+  * Database master & replicas encryption using AWS KMS - must be defined as launch time.
+  * If the master is not encrypted, the read replicas cannot be encrypted.
+  * To encrypt and un-encrypt databse, go through a DB snapshot & restore as encrypted.
+* In-flight encryption: TLS-ready by default, use the AWS TLS root certificates client-side.
+* IAM Authenication: IAM roles to connect to your database (intead of username/pw).
+* Security Groups: Controll Netwrok access to your RDS/Aurora DB.
+* No SSH available except on RDS Custom.
+* Audit Logs can be enabled and sent to CloudWatch Logs for longer retention.
+
+### RDS Proxy
+* Fully managed database proxy for RDS.
+* Allows apps to pool and share DB connections established with the database.
+* Improving database efficiency by reducing the stress on database resources (e.g., CPU, RAM) and minimize open connections (and timeouts).
+* Serveless, autoscaling, highly available (multi-AZ).
+* Reduce RDS & Aurora failover time by up 66%.
+* Supports RDS (MySQL, Postgres, MariaDB, MS SQL Server) and Aurora.
+* No code change required for most apps.
+* Enforce IAM Authentication for DB, and securely store credentials in AWS Secret Manager.
+* RDS Proxy is never publicly accesible (must be accessed from VPC).
+
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/8408b6af-5d50-4bb6-9e4f-031a19b65369)
+
+### ElastiCache
+* The same way RDS is to get managed Relational Databases
+* ElastiCache is to get managed by Redis or Memcached.
+* Caches are in-memory databases with really high performance, low latency.
+* Help reduce load off of databases for read intensive workloads.
+* Helps make your application stateless.
+* AWS takes care of OS maintance/patching, optimizations, setup, configuration, monitoring, failure recovery and backups.
+* **Using ElastiCache involves heavy application code changes.**
+
+##### DB Cache - Architecture
+* Applications queries ElastiCache, if not available, get from RDS and store in ElastiCache.
+* Helps relieve load in RDS.
+* Cache must have an invalidation strategy to make sure only the most current data is used in there.
+
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/12a2f778-fd99-43f1-8292-a32f605d7273)
+
+##### User Session Store - Architecture
+* User logs into any of the application.
+* The application writes the session data into ElastiCache.
+* The user hit another instance of our application.
+* The instance retrieves the data and the user is already logged in.
+
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/f47ab57d-0594-4af0-8562-24597aa20975)
+
+#### Redis vs Memcached
+* **Redis:**
+  * Multi AZ with Auto-Failover.
+  * Read Replicas to scale reads and have high availability.
+  * Data Durability using AOF persistence.
+  * Backup and restore features.
+  * Supports Sets and Sorted Sets.
+  * ![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/76a9f094-8a79-4b36-b907-e8995720871c)
+* **Memcached:**
+  * Multi-node for partitioning of data (sharding).
+  * No high availability (replication).
+  * Non persistent.
+  * No backup and restore.
+  * Multi-threaded architecture.
+  * ![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/60ee8f8c-3606-404c-85d8-9495cdb2bbca)
+ 
+---------
+
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/adc4767f-7ad4-4a29-a07f-b66f1b718473)
+
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/c0ae2fc5-ddf4-47e4-a4dd-f476f9f035ce)
+
+
+
