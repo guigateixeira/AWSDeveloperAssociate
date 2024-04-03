@@ -749,7 +749,7 @@ RDS is a managed service:
 
 ![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/6c466b22-dd5e-4119-a7aa-60f3534f1fde)
 
-Example code for Lazy Loading:
+**Example code for Lazy Loading:**
 ```
 async getUser(userId: string): Promise<User> {
   let user = await cache.get(userId);
@@ -764,4 +764,44 @@ async getUser(userId: string): Promise<User> {
   return user;
 }
 ```
-#### 
+
+#### Write Through
+* Pros:
+  * Data in cache is never stale, reads are quick.
+  * Write penalty vs Read penalty (each write require 2 calls).
+* Cons:
+  * Missing data until it is added/updated in the DB. Mitigation is to implement Lazy Loading strategy as well.
+  * Cache churn - a lot of the data will never be read.
+
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/9bdcca47-c7ff-4599-bd89-28bb327861e7)
+
+**Example code for Write Through:**
+```
+async saveUser(userRequest: UserRequest): Promise<User> {
+  let user = await db.query("INSERT INTO users, ....", userRequest);
+  await cache.set(user.id, user);
+  return user;
+}
+```
+
+#### Cache Eviction and Time-to-live (TTL)
+* Cache eviction can occur in 3 ways:
+  * You delete the item explicitly in the cache.
+  * Items is evicted because the memory is full and it's not recently used (LRU).
+  * You set an item time-to-live (TTL),
+* TTL are helpful for any kind of data:
+  * Leaderboards.
+  * Comments.
+  * Activity Streams.
+* TTL can reange from fwew seconds to days.
+* If too many evictions happen due to memory, you should scale up or out.
+
+### Amazon MemoryDb for Redis:
+* Redis-compatible, durable, in-memory database service.
+* Ultra-fast performance with over 160 millions request/second.
+* Durable in-memory data storage with Multi-AZ transactional log.
+* Scale seamlessly from 10s GBs to 100s TBs of storage.
+* Can be used in web and mobile apps, online gaming, ...
+
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/f3f8edd5-2e30-4e4a-8431-98ec38a5c044)
+
