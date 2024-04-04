@@ -908,3 +908,99 @@ async saveUser(userRequest: UserRequest): Promise<User> {
 * Route 53 records in the same hosted zone.
 **YOU CANNOT SET AN ALIAS RECORS FOR AN EC2 DNS NAME**
 
+#### Routing Policies
+* Define how Route 53 responds to DNS queries.
+* It's not the same as Load balancer routing which routes the traffic.
+  * DNS does not route any traffic, it only responds to the DNS queries.
+* Route 53 supports the following Routing Policies:
+  * Simple
+  * Weighted
+  * Failover
+  * Latency based
+  * Geolocation
+  * Multi-Value Answer
+  * Geoproximity
+
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/ffc0d18d-5f51-4fea-a997-d87d24bca629)
+
+##### Routing Policies - Simple:
+* Typically, route traffic to a single resource.
+* Can specify multiple values in the same record.
+* If multiple values are returned, a random one is chosen by the client.
+* When Alias enabled, specify only one AWS resource.
+* Can't be associated with Health Checks.
+
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/5d00b514-0666-47c2-b3ad-59d20ca4ab86)
+
+----
+##### Routing Policies - Weighted:
+* Controll the % of the requests that go to each specific resource.
+* Assign each record a relative weight:
+  * traffic(%) = (weight for specif record) / (Sum of all the weights for all records)
+  * Weights don't need to sum up to 100.
+* DNS records must have the same name and type.
+* Can be associated with Health Checks.
+* Use cases: load balancing between regions, testing new application versions, ...
+* Assign a weight of 0 to a record to stop sending traffic to a resource.
+* If all records have weight of 0, then all records will be returned equally.
+
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/41e52897-9c1f-4d4c-9442-77d0f464f941)
+
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/1e5408e1-d550-4670-bcca-ddf486d95f2b)
+
+----
+##### Routing Policies - Latency:
+* Redirects to the resource that has the least latency close to us.
+* Super helpful when latency for users is a priority.
+* Latency is based on traffic between users and AWS Regions.
+* UK users may be redirected to the US (if that's the lowest latency).
+* Can be associated with Health Checks (has a failover capability).
+
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/2b0be82e-7fc2-4cdd-bcd4-4c67ec3135df)
+
+----
+##### Routing Policies - Health Checks:
+* HTTP health Checks are only for public resources.
+* Health Check => Automated DNS Failover.
+  1. Health checks that monitor an endpoint (application, server, other AWS resource).
+  2. Health checks that monitor other health checks (Calculated Health Checks).
+  3. Health checks tha monitor CloudWatch Alarms (full control)
+* Health checks are integrated with CW metrics.
+
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/b2a12944-aca8-4211-9623-49244f778b04)
+
+###### Health Checks - Monitor an Endpoint:
+* About 15 global health checkers will check the endpoint health.
+  * Healthy/Unhealthy Threashold - 3 (default).
+  * Interval - 30 sec (can set to 10 sec - higher cost).
+  * Supported protocol: HTTP, HTTPS and TCP.
+  * If > 18% of health checkers report the endpoint is healthy, Route 53 considers it Healthy. Otherwise, it's Unhealthy
+  * Ability to choose which locations you want Route 53 to use.
+* Health Checks pass only when the endpoint responds with the 2xx and 3xx status codes.
+* Health Checks can be setup to pass/fail based on the text in the first 5120 bytes of the response.
+* Configure you router/firewall to allow incoming requests from Route 53 Health Checkers.
+
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/90cd4fe7-4240-432d-9445-18c0d4b1f527)
+
+###### Health Checks - Calculated Health Checks:
+* Combine the results of multiple Health Checks into a single Health Check.
+* You can use OR, AND, or NOT.
+* Can monitor up to 256 Child Health Checks.
+* Specify how many of the health checks need to pass to make the parent pass.
+* Usage: perform maintanance to your website without causing all health checks to fail.
+
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/9f7b68bc-55b6-4754-9cdb-308cb45f9709)
+
+###### Health Checks - Private Hosted Zones:
+* Route 53 health checkers are outside the VPC.
+* They can't access private endpoints (private VPC or on-premises resources).
+* You can create a CloudWatch metric and associate a CloudWatch Alarm, then create a Health Check that checks the alarm itself.
+
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/5c9bfa1e-f823-4b44-a285-14ee63a2a2a0)
+
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/b5ffb807-5cb9-47b6-a5be-6370b297a6c2)
+
+--------
+##### Routing Policies - Failover:
+*
+
