@@ -1002,5 +1002,73 @@ async saveUser(userRequest: UserRequest): Promise<User> {
 
 --------
 ##### Routing Policies - Failover:
-*
+ * Choose a primary instance, when the clinet makes a request it will return this first instance.
+ * Choose a failover instance, and if the primary fails heakth check, the DNS response will be this second (failover) instance.
 
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/242cb176-eff8-49e8-bd8b-950033d2a493)
+
+----
+##### Routing Policies - Geolocation:
+* Different from Latency-based.
+* This routing is based on user location.
+* Specify location by Continent, Country, or by US State (if there's overlapping, most precise location is selected).
+* Should create a Default record (in case there's no match on location).
+* Use cases: website location, restrict content distribution, load balancing.
+* Can be associated with Health Checks.
+
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/347ee929-5b3b-49a6-b38b-9504845a3eaa)
+
+----
+##### Routing Policies - Geoproximity:
+* Route traffic to your resources based on the geographic location of users and resources.
+* Ability to shift more traffic to resources based on the defined bias.
+* To cahnge the size of the geographic regions, specify bias values:
+  * To expand (1 to 99) - more traffic to the resource.
+  * To shrink (-1 to -99) - less traffic to the resource.
+* Resources can be:
+  * AWS resources (specify AWS region).
+  * Non-AWS resources (specify Lagitude and Longitude).
+* You must use Route 53 Traffic Flow (advanced) to use this feature.
+
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/6e07a624-fed2-4446-a97f-1e6597083d62)
+
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/5bd1abcd-be28-44d4-8af9-6fa0257f176b)
+
+----
+##### Routing Policies - Traffic flow:
+* Simplify the process of creating and maintaining records in large and complex configurations.
+* Visual editor to manage complex routing decision trees.
+* Configuraions can be saved as Traffic Flow Policy
+  * Can be applied to different Route 53 Hosted Zones (different domain names).
+  * Supports versioning.
+ 
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/2935a811-71e2-4782-8fa3-afd61e789c56)
+
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/51c37272-e2fc-4075-88de-c464027bd5e3)
+
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/657020b8-132c-4b5a-ba5c-dca46a023ab7)
+
+**Adding bias to regions:**
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/ed08b6e9-56b8-48ca-8c38-058d301be640)
+
+----
+##### Routing Policies - IP-based:
+* Routing is based on clinets IP addresses.
+* You provide a list of CIDRs for your clients and the coprresponding endpoints/locations (user-IP-to-endpoint mappings).
+* Use cases: Optimize performance, reduce network costs.
+* Ex: route end users from a particular ISP to a specific endpoint.
+
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/258491dc-587b-474a-ac4a-46a4271b62f9)
+
+----
+##### Routing Policies - Multi-Value:
+* Use when routing traffic to multiple resources.
+* Route 53 return multiple values/resources.
+* Can be associated with Health Checks (return only values for healthy resources).
+* Up to 8 healthy records are returned for eac Multi-Value query.
+* Multi-Value is not a subistitute for having an ELB.
+
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/0400397f-2718-4508-9e0c-5ef72f2a4f56)
+
+-----
+* If you buy your domain on a 3rd party registrar, you can still use Route 53 as DNS service provider.
