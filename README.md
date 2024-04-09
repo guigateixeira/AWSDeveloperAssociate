@@ -1199,3 +1199,108 @@ async saveUser(userRequest: UserRequest): Promise<User> {
   * s3://my-bucket/ ${\color{blue}folder1/another_folder/my_file.txt}$
 * The key is composed of ${\color{green}prefix}$ + ${\color{yellow}object name}$
   * s3://my-bucket/ ${\color{green}folder1/folder2/}$ ${\color{yellow}file.txt}$
+* There's no concept of "directories" within buckets.
+* Just keys very long names that contain slashes ("/").
+* Object values are the content of teh body:
+  * Max. Object Size is 5TB.
+  * If uploading more than 5GB, must use "multi-part upload".
+* Metadata (list of the text key / value pairs - system or user metadata).
+* Tags (Unicode key / value pair - up to 10) - useful for security/lifecycle.
+* Version ID (if versioning is enabled).
+
+-------
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/0870d2bb-873c-4c20-b4b4-cea6671fff4f)
+
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/70b85cfd-9845-4065-a209-29d784be07f5)
+
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/a80a2f3b-2387-4659-894b-7ee599d36a3d)
+
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/d9d94f61-9d0e-4602-863f-eafe7baba537)
+
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/84bbcfd6-99ab-42fd-92ec-aa221500d338)
+
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/fcee4b6e-61d3-4b6f-84b8-3c3976ac7046)
+
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/66d0f070-0892-4048-8317-08c5084bf5c5)
+
+-------
+### S3 - Security
+* User-Based
+  * IAM Policies - which API calls should be allowed for a specific user from IAM.
+* Resource-Based
+  * Buckets Policies - buckets wide rule from the S3 console - allows cross account.
+  * Object Access Control List (ACL) - finer grain (can be disabled).
+  * Bucket Access Control List (ACL) - less common (can be disabled).
+* Note: an IAM principal can access an S3 object if:
+  * The user IAM permissions ALLOW it OR the resource policy ALLOWS it.
+  * AND there's no explicit DENY.
+* Encryption: encrypt objects in Amazon S3 using encryption keys.
+
+**S3 Bucket Policies**
+* JSON based policies
+  * Resources: bucket and objects.
+  * Effect: Allow/Deny
+  * Actions: Set of API to Allow or Deny.
+  * Principal: The account or the user to apply the policy to.
+* Use S3 bucket for policy to:
+  * Grant public access to the bucket.
+  * Force objects to be encrypted at upload.
+  * Grant access to another account (Cross Account).
+
+```
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "PublicListObjects",
+            "Effect": "Allow",
+            "Principal": "*",
+            "Action": "s3:ListBucket",
+            "Resource": "arn:aws:s3:::YourBucketName"
+        }
+    ]
+}
+
+```
+
+- Public Access - Use Bucket Policy
+
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/e310d3bf-8cbf-4a71-beca-bcd0c5f93d78)
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/728a62b1-e6ee-4474-864c-45f3a22b0271)
+
+- User Access to S3 - IAM permissions
+
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/4b20fc61-1dd5-47b8-a402-9efd60e325cc)
+
+- EC2 instance access - Use IAM Roles
+
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/148d00aa-41e9-40cd-b4f9-c8d78e4964c1)
+
+--------
+### S3 - Static Website Hosting
+* S3 can host static websites and have them accessible on the Internet.
+* The website URL will be (depending on the region).
+  * `http://bucket-name.s3-website-aws-region.amazonaws.com`
+   OR
+  *  `http://bucket-name.s3-website.aws-region.amazonaws.com`
+* If you get a 403 Forbidden error, make sure the bucket policy allows public reads!
+
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/cc13fbf6-149c-447d-b853-a0727a1a8641)
+
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/562331af-fb5c-43d1-bee1-cafefa42f217)
+
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/b56c6b9c-0d82-4ed8-921e-d8e53d402046)
+
+------------
+### S3 - Versioning
+* You can version your files Amazon S3.
+* It is enabled at the buckets level.
+* Same key overwrite will change the "version": 1, 2, 3 ...
+* It is best practice to version your buckets
+  * Protect against unintended deleted (ability to restore a version).
+  * Easy roll back to previous version.
+* Notes:
+  * Any file that is not versioned prior to enabling versioning will have version "null".
+  * Suspending versioning does not delete the previous versions.
+
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/ac8a0456-ec71-4863-8f29-b592970a65ba)
