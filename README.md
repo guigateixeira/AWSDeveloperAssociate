@@ -1166,5 +1166,16 @@ async saveUser(userRequest: UserRequest): Promise<User> {
 ### Three Tier Architecture
 ![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/09cba0a8-2cf9-4e41-a369-a8da877082b5)
 
-
+-----
+## Section 8: S3
+### S3 - Use Cases
+* Backup and storage.
+* Disaster Recovey.
+* Archive.
+* Hybrate Cloud Storage.
+* Application hosting.
+* Media hosting.
+* Data lakes & Big Data analysis.
+* Software delivery.
+* Static website.
 
