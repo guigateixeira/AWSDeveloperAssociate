@@ -1198,4 +1198,4 @@ async saveUser(userRequest: UserRequest): Promise<User> {
   * s3://my-bucket/${\color{blue}my_file.txt}$
   * s3://my-bucket/${\color{blue}folder1/another_folder/my_file.txt}$
 * The key is composed of ${\color{green}prefix}$ + ${\color{yellow}object name}$
-  * s3://my-bucket/${\color{green}folder1/another_folder/}$$\color{yellow}my_file.txt}$
+  * s3://my-bucket/${\color{green}folder1/another_folder/}$ $\color{yellow}my_file.txt}$
