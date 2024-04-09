@@ -1195,7 +1195,7 @@ async saveUser(userRequest: UserRequest): Promise<User> {
 ### S3 - Objects
 * Object (files) have a Key.
 * The ${\color{blue}key}$ is the FULL path
-  * s3://my-bucket/${\color{blue}file.txt}$
-  * s3://my-bucket/${\color{blue}folder1/another_folder/my_file.txt}$
+  * s3://my-bucket/ ${\color{blue}file.txt}$
+  * s3://my-bucket/ ${\color{blue}folder1/another_folder/my_file.txt}$
 * The key is composed of ${\color{green}prefix}$ + ${\color{yellow}object name}$
-  * s3://my-bucket/${\color{green}folder1/folder2/}$ ${\color{yellow}file.txt}$
+  * s3://my-bucket/ ${\color{green}folder1/folder2/}$ ${\color{yellow}file.txt}$
