@@ -154,6 +154,7 @@ It's mainly used to get data back from a instance that stoped into a new instanc
 *  Availability and durability
   * Standard: Multi-AZ, great for prod.
   * One Zone: One AZ, great for dev, backup enabled by default, compatible with IA (EFS One Zone-IA).
+
 ![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/3874ebb4-7374-4616-979f-828f8c663b53)
 
 ### EBS vs EFS
@@ -167,6 +168,7 @@ It's mainly used to get data back from a instance that stoped into a new instanc
   * Restore the snapshot to another AZ.
   * EBS backup use IO abd you shouldn't run them while the application is handling a lot of traffic.
 * Root EBS Volumes of instances get terminated by default if the EC2 instance gets terminated (can be disabled).
+
   ![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/26a2f0b1-a34d-4011-b953-a27de81742a2)
 
 * EFS:
@@ -1409,3 +1411,64 @@ The ones that have a versionId === null are the ones that were uploaded before v
 There is V1 and V2.
 
 ![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/852a69cc-7c1e-40e0-9781-e2a9f0bb7b37)
+
+### MFA with CLI
+* To use MFA with the CLI, you must create a temporary session.
+* To do so, you must run the STS GetSessionToken API call.
+* aws sts get-session-token --serial-number arn-of-the-mfa-device --token-code code-from-token --duration-seconds 3600
+
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/15c26181-9b71-4fb4-9176-33f7466e76ea)
+
+### AWS SDK
+* We use AWS SDK when coding against AWS Services.
+* If you dont't specify or configure a default region, the us-east-1 will be chosen by default.
+
+### AWS Limits (Quotas)
+* API Rate Limits
+  * DescribeIntances API for EC2 has a limit of 100 calls per seconds.
+  * GetObject on S3 has a limit of 5500 GET per second per prefix.
+  * For Intermittent Errors: implement Exponential Backoff.
+  * For Consistent Errors: request an API throttling limit increase.
+* Service Quotas (Service Limits)
+  * Running On-Demand Standard Instances: 1152 vCPU.
+  * You can request a service limit increase by opening a ticket.
+  * You can request a service quota increase by using the Service Quotas API.
+
+#### Exponencial Backoff (any AWS service)
+* If you get ThrottlingException intermittently, use exponencial backoff.
+* Retry mecainsm already included in AWS SDK API calls.
+* Must implement yourself using the AWS API as-is or in specific cases.
+  * Must only implement the retries onm 5xx server errors and throttling.
+  * Do not implement in the 4xx client errors.
+ 
+### AWS CLI Credential Provider Chain
+* The CLI will look for credentials in this order:
+  1. Command line options: --region, --output, and --profile.
+  2. Env variables: AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, and AWS_SESSION_TOKEN.
+  3. CLI credentials file: aws configure.
+  4. CLI configuration file: aws configure.
+  5. Container credentials: for ECS tasks.
+  6. Intances profile credential: for EC2 Intances Profiles.
+
+* The SDK will look for credentials in this order:
+  1. Java system properties: aws.accessKeyId and aws.secretKey.
+  2. Env variables:  AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY.
+  3. The default credentials profile file, shared by many SDKs.
+  4. Amazon ECS container credentials: for ECS containers.
+  5. Intance profile credentials: used on EC2 instances.
+ 
+**Best Practices**
+* Overall, NEVER STORE AWS CREDENTIALS IN YOUR CODE.
+* Best practice is for credentials to be inherited from the credenmtials chain.
+* If using working within AWS use IAM roles:
+  * EC2 Instances roles for EC2 intances.
+  * ECS Roels for ECS Tasks.
+  * Lambda Roles for Lambda functions.
+* If working outside of AWS, use env variables / named profiles.
+
+### AWS Signatures
+* When you call the AWS HTTP API, you sign the request so that AWS can identify you, using your AWS credentials (access key & secret key).
+* If you use the SDK or CLI, the HTTP request are signed for you.
+* You should sign an AWS JTTP request using Signature v4 (SigV4).
+
+You can send the signature in the header or in a query string.
