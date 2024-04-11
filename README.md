@@ -1304,3 +1304,34 @@ async saveUser(userRequest: UserRequest): Promise<User> {
   * Suspending versioning does not delete the previous versions.
 
 ![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/ac8a0456-ec71-4863-8f29-b592970a65ba)
+
+
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/d3499b21-8729-449a-a9f1-e2df8f63eba6)
+
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/44261d2e-3036-43f3-8af4-5f9b32d90ca4)
+
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/a5f3e39d-691d-462b-896d-870271bd9513)
+
+The ones that have a versionId === null are the ones that were uploaded before versioning was enabled in the bucket.
+
+------------
+### S3 - Replication
+* Must enable Versioning in source and destination buckets.
+* Cross-Region Replication (CRR).
+* Same-Region Replication (SRR).
+* Buckets can be in different AWS accounts.
+* Copying is asynchronous.
+* Must give proper IAM permissions to S3.
+* Use cases:
+  * CRR - compliance, lower latency access, replication across accounts.
+  * SRR - log aggregation, live replication between production and test accounts.
+
+* Agter you enable Replication, only new objects are replicated.
+* Optionally, you can replicate existing objects using S3 Batch Replication.
+  * Replicates existing objects and objects that failed replication.
+* For DELETE operations
+  * Can replicate delete markers from source to target (optional setting).
+  * Deletions with a version ID are not replicated (to avoid malicious deletes).
+* There is no "chaining" of replication
+  * If bucket 1 has replication into bucket 2, which has replication into bucket 3.
+  * Then objects created in bucket 1 are not replicated to bucket 3.
