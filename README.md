@@ -1394,4 +1394,5 @@ The ones that have a versionId === null are the ones that were uploaded before v
 ![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/8195163c-5ebf-4fc8-896a-c070618037ce)
 
 
-
+--------------
+## Section 9 - AWS CLI, SDK, IAM Roles & Policies
