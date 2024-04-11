@@ -1335,3 +1335,63 @@ The ones that have a versionId === null are the ones that were uploaded before v
 * There is no "chaining" of replication
   * If bucket 1 has replication into bucket 2, which has replication into bucket 3.
   * Then objects created in bucket 1 are not replicated to bucket 3.
+
+------------
+### S3 - Storage Classes
+* Amazon S3 Standard - General Purpose.
+* Amazon S3 Standard - Infrequent Access (IA).
+* Amazon S3 One-Zone - Infrequent Access.
+* Amazon S3 Glacier Instant Retrieval.
+* Amazon S3 Glacier Deep Archive.
+* Amazon S3 Intelligent Tiering.
+
+#### S3 Durability and Availability
+* Durability:
+  * High Durability (99.99999999999%) of object across multiple AZ.
+  * Same for all storage classes.
+* Availability
+  * Mesures how readily available a service is.
+  * Varies depending on storage class.
+ 
+#### S3 Standard - General Purpose
+* 99,99% Availability.
+* Used for frequently accessed data.
+* Low latency and high throughput.
+* Sustain 2 concurrent facility failures.
+* Use Cases: Big Data analitics, mobile & gaming apps, ...
+
+#### S3 Infrequent Access
+* For data that is less frequently accessed, but requires rapid access when needed.
+* Lower cost than S3 Standard.
+* Amazon S3 Standard-Infrequent Access (S3 Standard-IA)
+  * 99,9% Availability.
+  * Use cases: Disaster recovery, backups.
+* Amazon S3 One Zone-IA
+  * High durability (99,9999999999%) in a single AZ; data lost when Az is destroyed.
+  * 99,5% Availability
+  * Use cases: storing secondary backup copies of on-premises data.
+ 
+#### S3 Glacier
+* Low-cost storage meant for archioving/backup
+* Pricing: price for storage + object retrival cost.
+* Amazon S3 Glacier Instant Retrieval
+  * Millisecond retrival, great for data accessed once a quarter.
+  * Minimum storage duration of 90 days.
+* Amazon S3 Glacier Flexible Retrival
+  * Expedited (1 to 5 min), Standard (3 to 5 hours)m Bulk (5 to 12 hours) - free.
+  * Minimum storage duration of 90 days.
+* Amazon S3 Glacier Deep Archive - for long term storage:
+  * Standard (12 hours), Bulk (48 hours).
+  * Minimum storage duration of 180 days.
+
+#### S3 Intelligent Tiering
+* Small monthly monitoring and auto-tiering fee.
+* Moves objects automatically between Access Tiears based on usage.
+* There are no retrieval charges in S3 Intelligent-Tiering.
+
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/91f5f4fe-75cb-4e12-b672-539f985882e8)
+
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/8195163c-5ebf-4fc8-896a-c070618037ce)
+
+
+
