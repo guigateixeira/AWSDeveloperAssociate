@@ -329,7 +329,9 @@ Target Groups:
 ![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/54a068ac-90e6-46ff-a681-c8b669f30d7f)
 
 -------
+
 ![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/b3cfbf5d-de76-4be2-bc9f-baeb7acb0a59)
+
 ----
 
 #### Gateway Load Balance
@@ -379,6 +381,7 @@ This is done to make sure the user doesn't lose his session data, but it's good 
 ![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/1ac7a088-7898-4a12-8557-85c39721b4e3)
 
 ![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/d9ebf6c3-fd75-4c9c-9c16-e8c60cb9bb13)
+
 ---------
 ##### Cross-Zone Load Balancer
 ![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/040b1c39-cbee-4d84-a8d8-d70ef3f8bba7)
@@ -1396,3 +1399,13 @@ The ones that have a versionId === null are the ones that were uploaded before v
 
 --------------
 ## Section 9 - AWS CLI, SDK, IAM Roles & Policies
+### EC2 Intances Metadata (IMDS)
+* AWS EC2 Instances Metadata (IMDS) is powerful but one of the least known features.
+* It allows ASW EC2 instances to "learn about themselves" without using an IAM Role for that purpose.
+* You can retrieve the IAM Role name from the metadata, but you cannot retrieve the IAM Policy.
+* Metadata = INfo about the EC2 instance.
+* Userdata = launch script of the EC2 instance.
+
+There is V1 and V2.
+
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/852a69cc-7c1e-40e0-9781-e2a9f0bb7b37)
