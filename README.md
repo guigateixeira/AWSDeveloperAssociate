@@ -206,7 +206,6 @@ It's mainly used to get data back from a instance that stoped into a new instanc
 ![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/42655e2a-b88e-4a60-a9d4-6a4a28390700)
 
 ------------------
-------------------
 
 ## Section 4: ELB (Elastic Load Balancer) + ASG (Auto Scaling Group)
 
@@ -1472,3 +1471,65 @@ There is V1 and V2.
 * You should sign an AWS JTTP request using Signature v4 (SigV4).
 
 You can send the signature in the header or in a query string.
+
+------------------
+
+## Section 10: Advanced Amazon S3
+### Moving between Storage Classes
+* You can trasition objects between storage classes.
+* For infrequently accessed object, move them to Standard IA.
+* For archive objects that you don't need fast access to, move them to Glacier or Glacier Deep Archive.
+* Moving objects can be automated using Lifecycle Rules.
+
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/770d1cc5-91ff-4bfe-add1-66ff69bf2243)
+
+### Lifecycle Rules
+* Transition Actions - configure objects to transition to another storage class
+  * Move objects to Standard IA class 60 days after creation.
+  * Move to Glacier for archiving after 6 months.
+* Expiration actions - configure objects to expire (delete) after some time
+  * Access log files can be set to delete after a 365 days.
+  * Can be used to delete old versions of files (if versioning is enabled).
+  * Can be used to delete incomplete Multi-Part uploads.
+* Rules can be created for a certain prefix (example:s3://mybucket/mp3/*)
+* Rules can be created for certain objects Tags (example:Department:Finance).
+
+### Analytics - Storage Class Analysis
+* Help you decide when to transition objects to the right storage class.
+* Recommendations for Standard and Standard IA (Does not work for One-Zone IA or Glacier).
+* Report is updated daily.
+* 24 to 48 hours to start seeing data analysis.
+
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/0c1e6132-7e44-402a-bf8b-f3fcea2bad52)
+
+----------
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/caa61b58-2462-4ec1-b7ef-5c543ad252b3)
+
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/9c370fb4-a7fb-4b99-9f34-52498b458ae8)
+
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/46e97026-08bb-45da-965c-e860f227abe4)
+----------
+### S3 Event Notifications
+* S3:ObjectCreated, S3:ObjectRemoved, S3:ObjectRestore, S3:Replication, ...
+* Object name filtering possible (*.jpg)
+* Use case: generate thumbnails of images uploaded to S3.
+* Create as many S3 events as desired.
+* S3 event notifications typically deliver events in seconds but can sometimes take a minute or longer.
+
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/2cee9fb6-8a24-4888-b467-fad19d1fcecd)
+
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/548172de-5618-48a1-b540-e3280eb61735)
+
+### S3 Event Notifications with Amazon EventBridge
+* Advanced filtering options with JSON rules (metadata, object size, name, ...).
+* Multiple Destinations - ex Step Functions, Kinesis Streams / Firehose ...
+* EventBridge Capabilities - Archive, Replay events, Reliable delivery.
+
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/b685d703-125c-4439-a592-f1613c184f37)
+
+
+
+
+
+
+
