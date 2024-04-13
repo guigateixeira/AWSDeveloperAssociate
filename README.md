@@ -1527,9 +1527,58 @@ You can send the signature in the header or in a query string.
 
 ![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/b685d703-125c-4439-a592-f1613c184f37)
 
+-----------
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/b23a75ca-60b0-403d-bbe1-61253f5117c2)
 
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/31c66cf4-b2bd-4c2f-ac72-040f099e051d)
 
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/9e307aef-d6e1-42f7-99ce-6181804dcad8)
+-----------
+### S3 - Baseline Performance
+* Amazon S3 automatically scales to high request rates, latency 100-200ms.
+* Your application can achieve at least 3500 PUT/COPY/POST/DELETE or 5500 GET/HEAD requests per seconds per prefix in a bucket.
+* There are no limits to the number of prefixes in a bucket.
 
+### S3 Performance
+* Multi-part upload:
+  * Recommended for files > 100MB, must use for files > 5GB.
+  * Can help parallelize uploads (speed up transfers)
+ 
+ ![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/e2ff6dc5-0bb8-40eb-9042-73172f495e99)
 
+* S3 Transfer Acceleration:
+  * Increase transfer speed by transferring file to an AWS edge location which will forward the data to the S3 bucket in the target region.
+  * Compatible with multi-part upload
+ 
+ ![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/b85f2c9f-5679-47b2-a611-9113c56aa317)
 
+#### S3 Performance - S3 Byte-Range Fetches
+* Parallelize GETs by requesting specific byte ranges.
+* Better resilience in case of failures.
+* Can be used to speed up downloads.
+* ![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/fd36574f-0b8f-4820-bf9d-fceff83ca106)
+* Can be used to retrieve only partial data (for example the head of a file).
+* ![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/e7a80b30-a546-4207-8cd3-96665b471920)
 
+### S3 Select & Glacier Select
+* Retrieve less data using SQL by performing server-side filtering
+* Can filter by rows & columns (simple SQL statements).
+* Less network transfer, less CPU cost client-side.
+
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/f843977f-fd93-4170-a0a1-28646a2e6993)
+
+### S3 User-Defined Object Metadata & S3 Object Tags
+* S3 User-Defined Object Metadata
+  * When uploading an object, you can also assign metadata.
+  * Name-value (key-value) pairs.
+  * User defined metadata must begin with "x-amz-meta-".
+  * Amazon S3 stores user-defined metadata keys in lowercase.
+  * Metadata can be retrieved while retrieving the object.
+* S3 Object Tags
+  * Keu-value pairs for objects in Amazon S3.
+  * Useful for fine-grained permissions (only access specific objects woth specific tags).
+  * Useful for analytics purpose (using S3 Analytics to group by tags).
+* **YOU CANNOT SEARCH THE OBJECT METADATA OR OBJECT TAGS**
+* Instead, you must use an external DB as a search index such as DynamoDB.
+
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/b840109f-48a1-4e0b-a516-dc58e74cf19a)
