@@ -1582,3 +1582,70 @@ You can send the signature in the header or in a query string.
 * Instead, you must use an external DB as a search index such as DynamoDB.
 
 ![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/b840109f-48a1-4e0b-a516-dc58e74cf19a)
+
+------
+## Section 11: Amazon S3 Security
+### Encryption
+There are 4 main methods to encrypt objects in S3:
+* Server-Side Encryption (SSE)
+  * Server-side encryption with Amazon S3-Managed Keys (SSE-S3) - Enabled by default.
+    * Encrypts S3 objects using keys handled, managed and owned by AWS.
+  * Serve-side encryption with KMS Key stored in AWS (SSE-KMS).
+    * Leverage AWS Key Management System (KMS) to manage encryption keys.
+  * Server-side encryption with customer-provided keys (SSE-C).
+    * When you want to manage your own encryption keys.
+* Client side encryption
+
+### Encryption - SSE-S3
+* Encryption using keys handled, managed, and owned by AWS.
+* Object is encrypted server-side.
+* Encryption type is AES-256.
+* Must set header "X-amz-server-side-encryption": "AES256".
+* Enabled by default for new buckets & new obiects.
+
+<img width="813" alt="image" src="https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/9661c584-7200-409a-b196-d52dbd188a91">
+
+### Encryption - SSE-KMS
+* Encryption using keys handled and managed by AWS KMS (Key Management Service).
+* KMS advantages: user control + audit key usage using CloudTrail.
+* Object is encrypted server side.
+* Must set header "x-amz-server-side-encryption": "aws:kms".
+
+<img width="824" alt="image" src="https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/38cae1c7-1a43-4d3a-beb0-84161d6758ce">
+
+#### SSE-KMS Limitations
+* If you use SSE-KMS, you may be impacted by the KMS limits.
+* When you upload, it calls the GenerateDataKey KMS API.
+* When you download, it calls the Decrypt KMS API.
+* Count towards the KMS quota per second (5500, 10000, 30000 req/s based on region).
+* You can request a quota increase using Service Quotas Console.
+
+<img width="307" alt="image" src="https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/d35039dc-518d-4751-bf87-3fa342796f41">
+
+### Encryption - SSE-C
+* Server-side encryption using keys fully managed by the customer outside of AWS.
+* Amazon S3 does NOT store the encryption key you provide.
+* HTTPS must be used.
+* Encryption key must be provided in HTTP headers, for every HTTP request made.
+
+<img width="818" alt="image" src="https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/c3caa0cb-1d12-4b89-a722-4dd6fff50939">
+
+### Encryption - Client-Side Encryption
+* Use client libraries such as Amazon S3 Client-Side Encryption Library.
+* Clients must encrypt data themselves before sending to Amazon S3.
+* Clients must decrypt data themselves after retrieving from Amazon S3.
+* Customer fully manages the keys and encryption cycle.
+
+<img width="776" alt="image" src="https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/767017ec-1bf1-42ff-8e4d-3d768ad61784">
+
+### Encryption in Transit (SSL/TLS)
+* Amazon S3 exposes 2 endpoints:
+  * HTTP Endpoint - non encrypted
+  * HTTPS Endpoint - encryption in flight
+* HTTPS is recomended.
+* HTTPS is mandatory for SSE-C.
+* You can force encryption in flight with a bucket policy.
+
+
+
+
