@@ -1646,6 +1646,17 @@ There are 4 main methods to encrypt objects in S3:
 * HTTPS is mandatory for SSE-C.
 * You can force encryption in flight with a bucket policy.
 
+------
+<img width="1036" alt="image" src="https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/cc1f9f33-5626-4574-9766-f9196f2bd3ce">
+under bucket creation
+
+<img width="1019" alt="image" src="https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/5f0ab8ac-84bc-4dd4-9cf7-3d5ff4dddacf">
+kms encryption
+
+-------
+Bucket policies will always be evaluated before default encryption.
+SSE-S3 encryption is automatically applied to new objects stored in S3 bucket.
+
 
 
 
