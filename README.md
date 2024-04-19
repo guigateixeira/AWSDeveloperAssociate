@@ -1653,10 +1653,19 @@ under bucket creation
 <img width="1019" alt="image" src="https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/5f0ab8ac-84bc-4dd4-9cf7-3d5ff4dddacf">
 kms encryption
 
--------
+
 Bucket policies will always be evaluated before default encryption.
 SSE-S3 encryption is automatically applied to new objects stored in S3 bucket.
 
-
+-------
+#### S3 - CORS
+CORS:
+* Cross-Origin Resource Sharing (CORS).
+* Origin = scheme (protocol) + host (domain) + port
+  * example: https://www.example.com (implied port is 443 for HTTPS, 80 for HTTP)
+* Web Browser based mechanism to allow requests to other origins while visiting the main origin.
+* Same origin: http://example.com/app1 & http://example.com/app2
+* Different origins: http://www.example.com & http://other.example.com
+* The requests won't be fullfiled unless the other origin allows for the requests, using CORS Headers.
 
 
