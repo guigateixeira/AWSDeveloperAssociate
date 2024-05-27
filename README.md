@@ -1668,4 +1668,53 @@ CORS:
 * Different origins: http://www.example.com & http://other.example.com
 * The requests won't be fullfiled unless the other origin allows for the requests, using CORS Headers.
 
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/8b167a43-5f1c-4d93-b737-ed955a4a7586)
 
+* If a client makes a cross-origin request on our S3 bucket, we need to enable the correct CORS headers.
+* You can allow for a specific origin or for * (all origins).
+
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/c4d9e398-fbed-4637-aae3-afa71a099e6a)
+
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/1a58e3a4-5256-4ef0-a761-fd4cb4ee9a9c)
+
+-------
+#### S3 - MFA Delete
+* MFA (Multi-Factor Authentication) - forces users to generate a code on a device before doing important operations on S3.
+* MFA will be required to:
+  * Permanently delete an object version.
+  * Suspend Versioning on the bucket.
+* MFA won't be required to:
+  * Enable Versioning
+  * List deleted versions
+* To use MFA Delete, Versioning must be enabled on the bucket.
+* Only the bucket owner (root) can enable/disable MFA Delete.
+
+-------
+#### S3 - Access Logs
+* For audit purpose, you may want to log all access to S3 buckets,
+* Any request made to S3, frm any account, authorized or denied, will be logged into another S3 bucket.
+* That data can be analyzed using data analysis tools.
+* The target logging bucket must be in the same AWS region.
+
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/6382e348-2402-4504-91df-0db06ed78132)
+
+**Never ser your logging bucket to be the monitored bucket, this will cause a logging loop and it will grow exponentially.**
+
+-----
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/effefff3-e238-4c6b-b420-8aad9201a888)
+
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/9302efad-8a12-4dd7-80d4-49b9dce45571)
+
+-----
+#### S3 - Pre-Signed URLs
+* Generate a pre-signed URLs using the S3 Console, AWS CLI or SDK.
+* URL Expiration:
+  * S3 Console - 1 min up to 720 min.
+  * AWS CLI - configure expiration with --expires-in param in seconds.
+* Users given a pre-signed URL inherit the permissions of the user that generated the URL for GET/PUT.
+* Examples:
+  * Allow only logged-in users to download a premium vidfeo from your S3 bucket.
+  * Allow an ever-changing list of users to download files by generating URLs dynamically.
+  * Allow temporarily a user to upload a file to a precise location in your S3 bucket.
+
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/a2b22c1d-3267-4345-925d-57e39c5e27a2)
