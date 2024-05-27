@@ -1747,3 +1747,53 @@ CORS:
 ![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/3a4e80a1-b6d7-4e0f-b8fc-38c884de3e8a)
 
 
+------
+## Section 12: CloudFront
+* Content Delivery Network (CDN).
+* Improves read performance, content is cached at the edge.
+* Improves users experience.
+* 216 Points of Presence globally (edge locations).
+* DDoS protection (because worldwide), integration with Shield, AWS Web Application Firewall.
+
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/479f0ac6-4529-4228-8d41-245b7c0705e8)
+
+### CloudFront - Origins
+* S3 bucket:
+  * For distributing files and caching them at the edge.
+  * Enhanced security with CloudFront Origins Access Control (OAC).
+  * OAC is replacing Origin Access Identity (OAI).
+  * CloudFront can be used as an ingress (to upload files to S3).
+* Custom Origin (HTTP):
+  * Application Load Balancer.
+  * EC2 instance.
+  * S3 website.
+  * Any HTTP backend you want.
+
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/c28e9460-c544-4a8b-b665-21df28547011)
+
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/92184ec8-d4d7-49eb-ae70-28755fa34461)
+
+### CloudFront vs S3 Cross Region Replication
+* CloudFront:
+  * Global Edge network.
+  * Files are cached for a TTL.
+  * Great for static content that must be available everywhere.
+* S3 Cross Region Replication:
+  * Must be setup for each region you want replication to happen.
+  * Files are updated in near real-time.
+  * Read only.
+  * Great for dynamic content that need to be available at low-latency in few regions.
+
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/8fc59537-25b1-42a3-9bc5-fc12b66895b7)
+
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/a2cacf08-4343-4ce5-a2c4-fb8746029eb5)
+
+### CloudFront - Caching and Caching Policies
+* The cache lives at each CloudFront Edge Location.
+* CloudFront identifies each object in the cache using the Cache Key.
+* You want to maximize the Cache Hit ratio to minimize requests to the origin.
+* You can invalidate part of the cache using the CreateInvalidation API.
+
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/ac3520d5-821c-46af-b961-29673f191ab5)
+
+
