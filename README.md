@@ -1718,3 +1718,22 @@ CORS:
   * Allow temporarily a user to upload a file to a precise location in your S3 bucket.
 
 ![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/a2b22c1d-3267-4345-925d-57e39c5e27a2)
+
+-----
+#### S3 - Access Points
+* Access Points simplify security management for S3 Buckets.
+* Each Access Point has:
+  * its own DNS name (Internet Origin or VPC Origin).
+  * an access point policy (similar to bucket policy) - manage security at scale.
+
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/56a4d699-80c6-4c53-bd1a-94dc5c6745e7)
+
+##### S3 - Access Points: VPC Origin
+* We can define the access point to be accessible only from within the VPC.
+* You must create a VPC Endpoint to access the Access Point (Gateway or Interface Endpoint).
+* The VPC Endpoint Policy must allow access to the target bucket and Access Point.
+
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/07a8a3d2-8f4b-42c1-bd66-55e84240573e)
+
+
+
