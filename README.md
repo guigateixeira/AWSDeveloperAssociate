@@ -1735,5 +1735,15 @@ CORS:
 
 ![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/07a8a3d2-8f4b-42c1-bd66-55e84240573e)
 
+-----
+#### S3 - Object Lambda
+* Use AWS Lambda Functions to change the object before it it retrieved by the caller application.
+* Only one S3 bucket is needed, on top of which we create S3 Access Point and S3 Object Lambda Access Points.
+* Use Cases:
+  * Redacting personally identifiable information for analytics or non-production environments.
+  * Converting across data formats, such as converting XML to JSON.
+  * Resizing and watermarking images on the fly using caller-specific details, such as the user who requested the object.
+
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/3a4e80a1-b6d7-4e0f-b8fc-38c884de3e8a)
 
 
