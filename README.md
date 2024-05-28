@@ -2013,4 +2013,7 @@ Examples:
 * Use cases: persistent multi-AZ shared storage for your containers.
 
 ![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/9d9b78d1-8715-42ae-81ad-93a4abbc89ed)
+-----
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/82188748-b450-4e10-9ede-adb5ef47db8f)
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/fb2f21ba-6ba9-4016-b1ab-824739102468)
 
