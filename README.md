@@ -2016,4 +2016,22 @@ Examples:
 -----
 ![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/82188748-b450-4e10-9ede-adb5ef47db8f)
 ![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/fb2f21ba-6ba9-4016-b1ab-824739102468)
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/73cb1e64-246f-43fb-aed0-bc25c9c687df)
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/c4ed55c3-616a-4f12-b81f-889c66639b69)
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/6e104f4d-90e3-4aeb-9d4f-3e47ca7a6438)
+
+----
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/e0a33a09-9cd7-471a-bbf6-00550e40d4ac)
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/73da391d-9366-48aa-8450-313306ef7471)
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/7b7aabcb-5dfd-41fd-ab81-e7bc179e72d6)
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/e47ecf9f-865a-4e7a-bf1e-0dcd1ef12442)
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/af6f3e6e-0d28-4dc0-b02d-509ab1482044)
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/13199219-75cf-4dc6-a9a4-f017f417f8d1)
+
+
+
+
+
+
+
 
