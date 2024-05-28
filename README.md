@@ -1916,13 +1916,46 @@ Examples:
   * Limited lifetime.
  
 #### CloudFront Signed URL Process
-• Two types of signers:
-  • Either a trusted key group (recommended)
-    • Can leverage APis to create and rotate keys (and IAM for APl security)
-  • An AWS Account that contains a CloudFront Key Pair
-    • Need to manage keys using the root account and the AWS console
-    • Not recommended because you shouldn't use the root account for this
-• In your CloudFront distribution, create one or more trusted key groups
-• You generate your own public / private key
-  • The private key is used by your applications (e.g. EC2) to sign URLs
-  • The public key (uploaded) is used by CloudFront to verify URLs
+* Two types of signers:
+  * Either a trusted key group (recommended)
+    * Can leverage APIs to create and rotate keys (and IAM for APL security)
+  * An AWS Account that contains a CloudFront Key Pair
+    * Need to manage keys using the root account and the AWS console
+    * Not recommended because you shouldn't use the root account for this
+* In your CloudFront distribution, create one or more trusted key groups
+* You generate your own public / private key
+  * The private key is used by your applications (e.g. EC2) to sign URLs
+  * The public key (uploaded) is used by CloudFront to verify URLs
+
+-------
+### CloudFront - General/Advanced Concepts
+* The pricing will vary depending on the location (country).
+* You can reduce the number of edge locations for cost reduction
+* Three price classes:
+  1. Price Class All: all regions - best performance
+  2. Price Class 200: most regions, but excludes the most expensive regions
+  3. Price Class 100: only the least expensive regions
+ 
+##### Origin Groups
+* To increase high-availability and do failover.
+* Origin Group: one primary and one secondary origin.
+* If the primary origin fails, the second one is used.
+
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/711aa528-228f-490b-bb2b-23bdb2a6186f)
+
+##### Field Origin Encryption
+* Protect user sensitive information through application stack.
+* Adds an additional layer of security along with HTTPS.
+* Sensitive information encrypted at the edge close to user.
+* Uses asymmetric encryption.
+* Usage:
+  * Specify set of fields in POST requests that you want to be encrypted (up to 10 fields).
+  * Specify the public key to the encryption them.
+ 
+------
+### CloudFront - Real Time Logs
+* Get real time requests received by CloudFront sent to Kinesis Data Streams.
+* Monitor, analyze, and take actions based on content delivery performance.
+* Allows you to choose:
+  * Sampling Rate - percentage of requests for which you want to receive.
+  * Specific fields and specific Cache Behaviors (path patterns).
