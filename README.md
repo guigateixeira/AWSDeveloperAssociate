@@ -1796,4 +1796,133 @@ CORS:
 
 ![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/ac3520d5-821c-46af-b961-29673f191ab5)
 
+#### What is CloudFront Cache Key?
+* A unique identifier for every object in the cache.
+* By default, consists of hostname + resource portion of the URL.
+* If you have an application that serves up content that varies based on user, device, language, location, ...
+* You can add other elements (HTTP headers, cookies, query strings) to the cache key using Cloudfront Cache Policies.
 
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/17fe5fe0-f72e-47b8-85c6-3a86873bf246)
+
+#### CloudFront Policies - Cache Policy
+* Cache based on:
+  * HTTP Headers: None - Whitelist
+  * Cookies: None - Whitelist - Include All-Except - All
+  * Query Strings: None - Whitelist - Include All-Except — All
+* Control the TTL (0 seconds to | year), can be set by the origin using the Cache-Control header, Expires.
+* Create your own policy or use Predefined Managed Policies.
+* All HTTP headers, cookies, and query strings that you include in the Cache Key are automatically included in origin.
+
+##### HTTP Headers
+* None:
+  * Don't include any headers in the Cache Key (except default).
+  * Headers are not forwarded (except default).
+  * Best caching performance.
+* Whitelist:
+  * Only specified headers included in the Cache Key.
+  * Specified headers are also fowarded to Origin.
+
+##### Query strings
+* None:
+  * Don't include any query strings in the Cache Key.
+  * Query strings are not fowarded.
+* Whitelist:
+  * Only specified query strings included in the Cache Key.
+  * Only specified query strings are forwarded.
+* Include All-Except:
+  * Include all query strings in the Cache Key except the specified list.
+  * All query strings are forwarded except the specified list.
+* All:
+  * Include all query strings in the Cache Key.
+  * All query strings are forwarded.
+  * Worst performance.
+
+#### CloudFront Policies - Origin Request Policy
+* Specify values that you want to include in origin requests without including them in the Cache Key (no duplicated cached content)
+* You can include:
+  * НТТР headers: None - Whitelist - All viewer headers options
+  * Cookies: None - Whitelist - All
+  * Query Strings: None - Whitelist - All
+* Ability to add CloudFront HTTP headers and Custom Headers to an origin request that were not included in the viewer request
+* Create your own policy or use Predefined Managed Policies
+
+**Cache Policy vs Origin Request Policy**
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/f40ec38f-918a-4ca6-9e59-521d637c822a)
+
+#### CloudFront Policies - Cache Invalidations
+* In case you update the backend origin, CloudFront doesn't know about it and will only get the refreshed content after the TTL has expired.
+* However, you can force an entire or partial cache refresh (bypassing the TTL) by performing a CloudFront Invalidation.
+* You can invalidate all files (*) or a specific path (/images/*)
+
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/35884d31-d477-41ac-82cc-88b071192e48)
+
+------
+#### CloudFront - Cache Behaviors
+* Configure different settings for a given URL path pattern.
+* Example: one specific cache behaviour to images/*.jpg files on your web server.
+* Route to different kind of origins groups based on the content type or path pattern
+  * /images/*
+  * /api/*
+  * /* (default)
+* When adding additional Cache Behaviours, the Default Cache Behaviour is always the last to be processed an is always /*.
+
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/90201f22-62d7-4c28-845d-e0514f014c4c)
+
+Examples:
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/81c75a32-1b85-40e9-9409-a17183c38533)
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/efe89b8d-ccaa-47d6-bef1-61732bc42541)
+
+-------
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/f33f7f41-f23c-4c19-984c-5a0e1fd5564f)
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/1268e820-7d16-4927-9eff-898564d4165a)
+
+------
+### CloudFront - ABL as an Origin
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/9a773385-b758-4cb5-9c5e-88380e0fb22e)
+
+------
+### CloudFront - Geo Restriction
+* You can restrict who can access your distribution
+  * Allowlist: Allow your users to access your content only if they're in one of the countries on a list of approved countries.
+  * Blocklist: Prevent your users from accessing your content if they're in one of the countries on a list of banned countries.
+* The "country" is determined using a 3rd party Geo-IP
+
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/d216bd3e-7faf-48d9-bb05-38216f1a63b6)
+
+------
+### CloudFront - Signed URLs/Cookies
+* You want to distribute paid shared content to premium users over the world
+* We can use CloudFront Signed URL / Cookie. We attach a policy with:
+  * Includes URL expiration
+  * Includes IP ranges to access the data from
+  * Trusted signers (which AWS accounts can create signed URLs)
+* How long should the URL be valid for?
+  * Shared content (movie, music): make it short (a few minutes)
+  * Private content (private to the user): you can make it last for years
+* Signed URL = access to individual files (one signed URL per file)
+* Signed Cookies = access to multiple files (one signed cookie for many
+
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/c9651eba-1418-47f3-bfa8-3fcb13f2a7e5)
+
+#### Signed URLs vs S3 Pre-Signed URL:
+* CloudFront Signed URL:
+  * Allow access to a path, no matter the origin.
+  * Account wide key-pair, only the root can manage it.
+  * Can filter by IP, path, date, expiration.
+  * Can leverage caching features.
+* S3 Pre-Signed URL:
+  * Issue a request as the person who pre-signed the URL.
+  * Uses the IAM key of the signing IAM principal.
+  * Limited lifetime.
+ 
+#### CloudFront Signed URL Process
+• Two types of signers:
+  • Either a trusted key group (recommended)
+    • Can leverage APis to create and rotate keys (and IAM for APl security)
+  • An AWS Account that contains a CloudFront Key Pair
+    • Need to manage keys using the root account and the AWS console
+    • Not recommended because you shouldn't use the root account for this
+• In your CloudFront distribution, create one or more trusted key groups
+• You generate your own public / private key
+  • The private key is used by your applications (e.g. EC2) to sign URLs
+  • The public key (uploaded) is used by CloudFront to verify URLs
