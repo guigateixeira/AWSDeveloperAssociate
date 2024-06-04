@@ -2077,11 +2077,51 @@ Examples:
 * Task definitions are metadata in JSON form to tell ECS how to run a Docker container.
 * It contains crucial informations, such as:
   * Image name.
-  * Port biding for container and host
-  * Memory and CPU required
-  * Environment variables
-  * Networking information
-  * IAM Role
+  * Port biding for container and host.
+  * Memory and CPU required.
+  * Environment variables.
+  * Networking information.
+  * IAM Role.
   * Logging configuration (ex. CloudWatch).
 
-#### 
+#### Load Balancing (EC2 Launch Type)
+* We get a Dynamic Host Port Mapping if you define only the container port in the task definition.
+* The ALB finds the right port on your EC2 Instances.
+* You must allow on the EC2 instance's Security Group any port from the ALB's Security Group.
+
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/d070ff73-058f-4d1c-afff-eaad41829a08)
+
+#### Load Balancing (Fargate)
+* Each task has a unique private IP.
+* Only define the container port (host port is not applicable).
+* Example:
+  * ECS ENI Security Group (Allow port 80 from the ALB).
+  * ALB Security Group (Allow port 80/443 from the web).
+
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/973203b9-9936-4cb6-970d-8356cf148a22)
+
+**Amazon ECS -> One IAM Role per task definition**
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/308dde5f-d155-402d-9163-71df9e629b01)
+
+#### Amazon ECS - Environment Variables
+* Environment Variables
+  * Hardcoded - e.g., URLs
+  * SSM Parameter Store - sensitive variables (e.g., API keys, shared configs).
+  * Secret Managet - sensitive variables (e.g., DB password)
+* Environment Files (bulk) - Amazon S3.
+
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/90727bc0-19e3-4c28-a40a-be364dc67a8d)
+
+#### Amazon ECS - Data Volumes (Bind Mounts)
+* Share data between multiple containers in the same Task Definition.
+* Works for both EC2 and Fargate tasks.
+* EC2 Tasks - using EC2 instances storage
+  * Data are tied to the lifecycle of the EC2 instance.
+* Fargate Tasks - using epheral storage
+  * Data are tied to the container(s) using them
+  * 20 GiB - 200 GiB (default to 20 GiB).
+* Use cases:
+  * Share spheral data between multiple containers.
+  * "Sidecar" container pattern, where the "sidecar" container used to send metrics/logs to other destinations (separation of concerns).
+
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/78f7ffc5-c792-4d3c-a4d6-2a0c68466dd4)
