@@ -2125,3 +2125,99 @@ Examples:
   * "Sidecar" container pattern, where the "sidecar" container used to send metrics/logs to other destinations (separation of concerns).
 
 ![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/78f7ffc5-c792-4d3c-a4d6-2a0c68466dd4)
+
+
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/7be16316-1762-4e72-9200-b222dd1b0abb)
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/7504ea07-4447-4bb8-a8a8-cd9fabfc9a52)
+
+-----
+### Amazon ECS - Task Placements
+* When a task of type EC2 is launched ECS must determine where to place it, with the constraints of CPU, memory, and available port.
+* Similarly, when a service scales in, ECS needs to determine which task to terminate.
+* To assist with this, you can define a task placement strategy and task placement constraints.
+* **this is only for ECS with EC2, not Fargate.**
+
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/966afcaf-3651-42b5-8df4-cb8558216225)
+
+#### ECS Task Placement Process
+* Task placement strategies are a best effort
+* When Amazon ECS places tasks, it uses the following process to select container instances:
+  1. Identify the instances that satisfy the CPU, memory, and port requirements in the task definition.
+  2. Identify the instances that satisfy the task placement constraints.
+  3. Identify the instances that satisfy the task placement strategies.
+  4. Select the instances for task placement.
+
+#### ECS Task Placement Strategies
+##### Binpack
+* Place tasks based on the least available amount of CPU or memory.
+* This minimizes the number of instances in use (cost savings).
+
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/c05e434c-88e7-447a-8642-26a08d1b34fc)
+
+##### Random
+* Places the task randomly.
+
+##### Spread
+* Place the task evenly based on the specified value.
+
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/2cd7800a-d498-4071-aca9-84d6fffff59c)
+
+**You can mix and match these.**
+
+#### ECS Task Placement Constraints
+distinctInstance: place each task on a different container instance.
+memberOf: places task on instances that satisfy an expression.
+
+------
+### Amazon ECR
+* ECR = Elastic Container Registry.
+* Store and manage Docker images on AWS.
+* Private and public repository.
+* Fully integrated with ECS.
+* Access is controlled by IAM.
+* Supports image vulnerability scanning, versioning, image tags, ...
+
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/0dedb913-2fd3-40fa-b3c9-52c3ab56d2b9)
+
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/17c6bbcc-da7c-4bab-b55f-d8006c0e330d)
+
+------
+### AWS Copilot
+* CLI tool to build, release, and operate production-ready containerized apps.
+* Run your apps on AppRunner, ECS and Fargate.
+* Helps you focus on building apps rather than setting up infrastructure.
+* Provisions all required infrastructure for containerized apps (ECS, VPC, ELB, ECR, ...)
+* Automated deployments with one command using CodePipeline.
+* Deploy to multiple environments.
+* Troubleshooting, logs, health status, ...
+
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/775aedd3-9993-488b-807d-a0fc01e33277)
+
+
+------
+### Amazon EKS
+* Amazon EKS = Amazon Elastic Kubernetes Service.
+* It is a way to launch managed Kubernetes clusters on AWS
+* Kubernetes is an open-source system for automatic deployment, scaling and management of containerized (usually Docker) application
+* It's an alternative to ECS, similar goal but different API
+* EKS supports EC2 if you want to to deploy worker nodes or Fargate to deploy serverless containers
+* Use case: if your company is already using Kubernetes on-premises or in another cloud, and wants to migrate to AWS using Kubernetes
+* Kubernetes is cloud-agnostic (can be used in any cloud - Azure, GCP, ...)
+
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/ab998fc1-9ad9-4de5-bcf1-4205e615e3b1)
+
+#### Amazon EKS - Node Types
+* Managed Node Groups:
+  * Creates and manages Nodes (EC2 instances) for you
+  * Nodes are part of an ASG managed by EKS
+  * Supports On-Demand or Spot Instances
+* Self-Managed Nodes:
+  * Nodes created by you and registered to the EKS cluster and managed by an ASG
+  * You can use prebuilt AMI - Amazon EKS Optimized AMI
+  * Supports On-Demand or Spot Instances
+* AWS Fargate
+  * No maintenance required; no nodes
+ 
+#### Amazon EKS - Data Volumes
+* Need to specify StorageClass manifest on your EKS cluster.
+* Leverages a Container Storage Interface (CSI) compliant driver.
