@@ -2028,10 +2028,60 @@ Examples:
 ![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/af6f3e6e-0d28-4dc0-b02d-509ab1482044)
 ![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/13199219-75cf-4dc6-a9a4-f017f417f8d1)
 
+-----
+### Amazon ECS - Auto Scaling
+* Automatically increase/decrease the desired number of CS tasks.
+* Amazon ECS Auto Scaling uses AWS Application Auto Scaling
+  * ECS Service Average CPU Utilization.
+  * ECS Service Average Memory Utilization - Scale on RAM.
+  * ALB Request Count Per Target - metric coming from the ALB.
+* Target Tracking - scale based on target value for a specific CloudWatch metric.
+* Step Scaling - scale based on a specified CloudWatch Alarm.
+* Scheduled Scaling - scale based on a specified date/time (predictable changes).
+* ECS Service Auto Scaling (task level) != ECS Auto Scaling (EC2 instance level).
+* Fargate Auto Scaling is much easier to setup (because Serverless).
 
+#### EC2 Launch Type - Auto Scaling EC2 Instances
+* Accommodate ECS Service Scaling by adding underlying EC2 Instances.
+* Auto Scaling Group Scaling
+  * Scale your ASG based on CPU utilization.
+  * Add EC2 instances over time.
+* ECS Cluster Capacity Provider
+  * USed to automatically provision and scale the infrastructure for your ECS Task.
+ 
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/a3e3dd3f-4d57-4f82-bf00-7350f12cab98)
 
+-----
+### Amazon ECS - Rolling Updates
+* When updating from v1 to v2, we can control how many tasks can be started and stopped and which order.
 
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/7e6d9415-2965-47a9-a8ca-07b72d034e5a)
 
+###### Min 50%, Max 100%:
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/172353df-1634-4a3b-8fc4-07c99ade3a90)
 
+###### Min 100%, Max 150%:
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/dde43b74-cc88-463f-b2ae-b7e0cf666341)
 
+-----
+### Amazon ECS - Solutions Architectures
+**ECS Tasks involving Event Bridge**
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/e22611cc-0053-48c7-ab93-4cde2327b96d)
+**ECS Tasks involving Event Bridge Schedule**
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/2ef9a32b-108b-4b1a-ae07-496c9b48d15b)
+**ECS SQS Queue Example**
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/60189841-0e2d-4bfa-af2d-0c6c380e1fed)
 
+-----
+### Amazon ECS - Task Definitions (In Depth)
+* Task definitions are metadata in JSON form to tell ECS how to run a Docker container.
+* It contains crucial informations, such as:
+  * Image name.
+  * Port biding for container and host
+  * Memory and CPU required
+  * Environment variables
+  * Networking information
+  * IAM Role
+  * Logging configuration (ex. CloudWatch).
+
+#### 
