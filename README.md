@@ -1,4 +1,4 @@
-# AWSDeveloperAssociate
+# AWS Developer Associate
 
 ## Section 3: EC2 Instance Storage
 
