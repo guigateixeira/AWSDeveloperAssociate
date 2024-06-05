@@ -2436,21 +2436,56 @@ Creating a second env
   * Recommended way when you fully want to automate your flow
  
 ### CloudFront - Building Blocks
-• Template's Components
-  • AWSTemplateFormatVersion - identifies the capabilities of the template "2010-09-09"
-  • Description - comments about the template
-  • Resources (MANDATORY) - your AWS resources declared in the template
-  • Parameters - the dynamic inputs for your template
-  • Mappings - the static variables for your template
-  • Outputs - references to what has been created
-  • Conditionals - list of conditions to perform resource creation
-• Template's Helpers
-  • References
-  • Functions
+* Template's Components
+  * AWSTemplateFormatVersion - identifies the capabilities of the template "2010-09-09"
+  * Description - comments about the template
+  * Resources (MANDATORY) - your AWS resources declared in the template
+  * Parameters - the dynamic inputs for your template
+  * Mappings - the static variables for your template
+  * Outputs - references to what has been created
+  * Conditionals - list of conditions to perform resource creation
+* Template's Helpers
+  * References
+  * Functions
 
 ![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/7f313b6c-048f-41a4-aaf9-b02cf04be448)
 ![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/5fd48ed1-2cc3-4ed9-bbad-c651ccd4b018)
 ![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/ba6c3edd-6507-4d4e-bb6f-d59c63cee12b)
 
 ------
+### CloudFront - Resources
+* Resources are the core of your CloudFormation template (MANDATORY)
+* They represent the different AS Components that will be created and configured
+* Resources are declared and can reference each other
+* AWS figures out creation, updates and deletes of resources for us
+* There are over 700 types of resources (!)
+* Resource types identifiers are of the form:
+**service-provider:: service-name::data-type-name**
 
+------
+### CloudFront - Parameters
+* Parameters are a way to provide inputs to your AWS CloudFormation template
+* They're important to know about if:
+  * You want to reuse your templates across the company
+  * Some inputs can not be determined ahead of time
+* Parameters are extremely powerful, controlled, and can prevent errors from happening in your templates, thanks to types
+
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/ce0b681a-0474-4bcb-bf70-7eb48fc26d4d)
+
+**YOU SHOULD USE A PARAM IF THE RESOURCE CONFIGURATION IS LIKELY TO CHANGE IN THE FUTURE, SO YOU WON'T HAVE TO RE-UPLOAD A TEMPLATE TO CHANGE THE CONTENT**
+
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/69bae39f-0454-417a-8eca-5c32ba1f9bca)
+
+#### Reference a Patameter
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/f0f22387-0991-4284-a904-f134e7f2e3a9)
+* The Fn::Ref function can be levereged to reference parameters.
+* Parameters can be used anywher in a template.
+* The shorthand for this in YAML is !Ref
+* This function can also reference other elements within the template.
+
+#### Pseudo Parameters
+* AWS offers us Pseudo Parameters in any CloudFormation template.
+* These can be used at any time and are enabled by default.
+
+------
+### CloudFront - Mappings
