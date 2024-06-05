@@ -2258,9 +2258,134 @@ Elastic Beanstalk is a developer centric view of deploying an application on AWS
 Creating a second env
 ![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/c01cd010-45f1-462b-9af7-8328a64cb60a)
 
+----------------
+### Beanstalk Deployment Modes
+#### Beanstalk Deployment Option for Updates
+* All at once (deploy all in one go) - fastest, but instances aren't available to serve traffic for a bit (downtime)
+* Rolling: update a few instances at a time (bucket), and then move onto the next bucket once the first bucket is healthy
+* Rolling with additional batches: like rolling, but spins up new instances to move the batch (so that the old application is still available)
+* Immutable: spins up new instances in a new ASG, deploys version to these instances, and then swaps all the instances when everything is healthy
+* Blue Green: create a new environment and switch over when ready
+* Traffic Splitting: canary testing - send a small % of traffic to new deployment.
+
+1. All at once:
+   * Fastest deployment
+   * Application has downtime
+   * Great for quick iterations in development environment
+   * No additional cost
+
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/b73211d1-5089-449b-92f9-2537bb1cdd0b)
+
+2. Rolling:
+   * Application is running below capacity.
+   * Can set the bucket size.
+   * Application is running both versions simultaneously.
+   * No additional cost.
+
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/366eb219-94e9-4024-9a62-e85f89a65d8c)
+
+3. Rolling with additional batches:
+   * Application is running at capacity.
+   * Can set the bucket size.
+   * Application is running both versioons simultaneously.
+   * Small additional cost.
+   * Additional batch is removed at the end of the deployment.
+   * Longer deployment.
+   * Good for prod.
+  
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/d580295c-25aa-4fb1-b8fe-a24f3db915ab)
+
+4. Immutable:
+   * Zero downtime.
+   * New code is deployed to ne instances on a temporary ASG.
+   * High cost, double capacity.
+   * Longest deployment.
+   * Quick rollback in case of failures
+   * Great for prod.
+
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/6751a35c-6985-4410-ad23-2594fa331842)
+
+5. Blue/Green:
+   * Not a "direct feature" of Elastic Beanstalk.
+   * Zero downtime and release facility.
+   * Create a new "stage" environment and deploy v2 there.
+   * The new environment (green) can be validated independently and roll back if issues.
+   * Route 53 can be setup using weighted policies to redirect a little bit of traffic to the stage env.
+   * Using beanstalk, "swap URLs" when done with the env test.
+  
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/b2dfe1d4-7e0a-4f17-9a4d-c15ba67ae275)
+
+6. Traffic Splitting:
+   * Canary testing.
+   * New application version is deployed to a temporary ASG with the same capacity.
+   * A small % of traffic is sent to the temporary ASG for a canfigurable amount of time.
+   * Deployment health is monitored.
+   * If there's a deployment failure, this triggers an automated rollback (very quick).
+   * No app downtime.
+   * New instances are migrated from the temporary to the original ASG.
+   * Old app version is then terminated.
+
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/34d9b528-6850-4164-a494-b905a80719a1)
 
 
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/65dbc994-6e3f-4443-a811-649820310265)
 
+------
+### Beanstalk Lifecycle Policy
+* Elastic Beanstalk can store at most 1000 application versions.
+* If you don't remove old versions, you won't be able to deploy anymore.
+* To phase out old application versions, use a lifecycle policy.
+  * Based on time (old versions are removed)
+  * Based on space (when you have too many versions)
+* Versions that are currenttly used won't be deleted.
+* Option not to delete the source bundle in S3 to prevent data loss.
 
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/a0ca61c4-f5ea-494f-9f66-4b8ea5723ca4)
 
+------
+### Beanstalk Extentions
+* A zip file containing our code must be deployed to Elastic Beanstalk.
+* All the parameters set in the UI can be configured woth the code using files.
+* Requirements:
+  * in the .ebextentions/ directory in the root of the source code.
+  * YAML/JSON format.
+  * .config extentions
+  * Able to modify some default settings using: option_settings.
+  * Ability to add resources such as RDS, ElastiCache, DynamoDB, etc, ...
+ * Resources managed by .ebextentions get deleted if the env goes away.
 
+ **Under the hood Elastic Beanstalk relies on CloudFormation, which is used to provision other AWS services.**
+
+#### Elastic Beanstalk - Cloning
+* Clone an environment with the exact same configuration
+* Useful for deploying a "test" version of your application
+* All resources and configuration are preserved:
+  * Load Balancer type and configuration
+  * RDS database type (but the data is not preserved)
+  * Environment variables
+* After cloning an environment, you can change settings
+
+-------
+### Elastic Beanstalk Migrations
+#### Elastic Beanstalk Migrations - Load Balancer
+* After creating an Elastic Beanstalk env, you cannot change the Elastic Load Balancer type (only the configuration).
+* To migrate:
+  1. create a new environment with the same configuration except LB (can't clone).
+  2. deploy your application onto the new environment.
+  3. perform a CNAME swap or Route 53 update.
+ 
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/ffa10637-9c90-4d87-a44f-cdb025351b9a)
+
+#### RDS with Elastic Beanstalk
+* RDS can be provisioned with Beanstalk, which is greate for dev/test.
+* This is not great for prod as the DB lifecycle is tied to the Beanstalk env lifecycle.
+* The best for prod is to separately create an RDS database and provide our EB application with the connection stribng.
+
+#### Elastic Beanstalk Migrations - Decouple RDS
+1. Create a snapshot of RDS DB (as a safeguard)
+2. Go to the RDS console and protect the RDS database from deletion
+3. Create a new Elastic Beanstalk env, without RDS, point your application to existing RDS
+4. perform a CNAME swap. (blue/green) or Route 53 update, confirm working
+5. Terminate the old environment (RDS won't be deleted)
+6. Delete CloudFormation stack (in DELETE_FAILED state)
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/e184ce25-16b4-4922-90ac-6d489090b133)
