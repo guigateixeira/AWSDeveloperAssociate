@@ -2224,3 +2224,43 @@ memberOf: places task on instances that satisfy an expression.
 
 ---------
 ## Section 14: AWS Elastic Beanstalk
+### Elastic Beanstalk - Overview
+Elastic Beanstalk is a developer centric view of deploying an application on AWS
+* It uses all the component's we've seen before: EC2, ASG, ELB, RDS, ...
+* Managed service
+  * Automatically handles capacity provisioning, load balancing, scaling, application health monitoring, instance configuration, ...
+  * Just the application code is the responsibility of the developer
+* We still have full control over the configuration
+* Beanstalk is free but you pay for the underlying instances
+
+#### Components
+* Application: collection of Elastic Beanstalk components (environments, versions, configurations, ...)
+* Application Version: an iteration of your application code
+* Environment
+  * Collection of AWS resources running an application version (only one application version at a time)
+  * Tiers: Web Server Environment Tier & Worker Environment Tier
+  * You can create multiple environments (dev, test, prod, ...)
+
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/50492353-40cd-445a-82bf-f31715481650)
+
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/dbe80473-bc35-4e82-82a1-b8de413c6d0f)
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/df48b16b-0d57-4c04-81c4-7447ec709fb8)
+
+-----
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/fc258f3e-8932-4bd5-9a3a-7ab008d57aa9)
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/e48aab4e-684f-4fac-ba41-7848d6348d79)
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/93a27453-ee52-4542-bfa1-61193fce2dda)
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/918bfd2f-4a9d-43b8-92f9-406085bebe1f)
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/b62c49b4-3125-4861-a2f6-b914c5eda349)
+
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/49405aa9-6352-4340-a83d-1d70c477d5c7)
+
+Creating a second env
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/c01cd010-45f1-462b-9af7-8328a64cb60a)
+
+
+
+
+
+
+
