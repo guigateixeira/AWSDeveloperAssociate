@@ -2489,3 +2489,159 @@ Creating a second env
 
 ------
 ### CloudFront - Mappings
+* Mappings are fixed variables within your CloudFormation template
+* They're very handy to differentiate between different environments (dev vs prod), regions (AWS regions), AMI types...
+* All the values are hardcoded within the template
+
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/dd88b485-f41c-4233-961e-9f4ae8dea38b)
+
+* To access we use Fn::FindInMap to return a named value from a specific key.
+
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/c9d60caa-7260-411f-8ff4-c8afa885bb69)
+
+**Mappings vs Parameters**
+ Mappings are great when you know in advance all the values that can be taken and that they can be deduced from variables such as
+   Region
+   Availability Zone
+   AWS Account
+   Environment (dev vs prod)
+ They allow safer control over the template
+ Use parameters when the values are really user specific
+
+------
+### CloudFront - Outputs & Exports
+* The Outputs section declares optional outputs values that we can import into other stacks (if you export them first!
+* You can also view the outputs in the AWS Console or in using the AWS CLI
+* They're very useful for example if you define a network CloudFormation, and output the variables such as VPC ID and your Subnet IDs
+* It's the best way to perform some collaboration cross stack, as you let expert handle their own part of the stack
+
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/22d61d98-ee87-4967-8d61-84c5680c75b5)
+
+* Creating a SSH Security Group as part of one template.
+* We create an output that references that security group.
+
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/464ced2c-550d-4489-8a4c-2be1ed70381d)
+
+* We then create a second template that leverages that security group.
+* For this, we use the Fn::ImportValue function.
+* You can't delete the underlying stack until all the references are deleted.
+
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/8126fe5d-014b-4b1a-8ab6-6259b56d4aa5)
+
+------
+### CloudFront - Conditions
+* Conditions are used to control the creation of resources or outputs based on a condition
+* Conditions can be whatever you want them to be, but common ones are.
+  * Environment (dev / test / prod)
+  * AWS Region
+  * Any parameter value
+* Each condition can reference another condition, parameter value or mapping
+
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/ea96a7b5-8786-4fd8-81ac-7908f62cbaed)
+
+#### Define a Condition
+
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/f385083d-b1ea-4ced-a357-1d9a10939f27)
+
+* The logical ID is for you to choose. It's how you name condition
+* The intrinsic function (logical) can be any of the following:
+  * Fn::And
+  * Fn::Equals
+  * Fn:lf
+  * Fn::Not
+  * Fn::Or
+
+#### Apply a Condition
+* Conditions can eb applied to resources/outputs/ect
+
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/25a1ae95-758e-40d4-aba6-8659ab1907b6)
+
+------
+### CloudFront - Intrinsic Functions
+* Ref
+* Fn::Base64
+* Fn::GetAtt
+* En::Cidr
+* Fn::FindInMap
+* Fn: GetAZs
+* Fn::ImportValue
+* Fn::Select
+* Fn::Join
+* Fn::Split
+* Fn::Sub
+* Fn::Transform
+* Fn::ForEach
+* Fn::TojsonString
+* Fn::Length
+* Condition Functions (Fn::lf, Fn::Not, Fn:: Equals, etc).
+
+#### Fn::Ref
+* The Fn::Ref function can be leveraged to reference
+  * Parameters - returns the value of the parameter
+  * Resources - returns the physical ID of the underlying resource (e.g., EC2 ID)
+* The shorthand for this in YAML is !Ref
+
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/aeda30fa-c247-450c-8616-935e79764ca1)
+
+#### Fn::GetAtt
+* Attributes are attached to any resources you create
+* Example: the AZ of an EC2 instance
+
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/b2f1d3b3-8b98-4374-b61c-dcf059a0d929)
+
+#### Fn:FindInMap
+* We use Fn::FindInMap to return a named value from a specific key
+* !FindInMap [ MapName, TopLevelKey, SecondLevelKey ]
+
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/7089e629-8b5d-48e4-b0e2-1465133552b3)
+
+#### Fn::ImportValue
+* Import values that are exported in other stacks
+* For this, we use the Fn::ImportValue function
+
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/4ff7b59f-b23c-4db8-a4ac-e6628d71820c)
+
+#### Fn::Base64
+* Convert String to Base64 representation.
+
+------
+### CloudFront - Rollbacks
+* Stack Creation Fails:
+  * Default: everything rolls back (gets deleted). We can look at the log
+  * Option to disable rollback and troubleshoot what happened
+* Stack Update Fails:
+  * The stack automatically rolls back to the previous known working state
+  * Ability to see in the log what happened and error messages
+* Rollback Failure? Fix resources manually then issue ContinueUpdateRollback API from Console
+
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/24d6a808-0bff-4246-8ca8-b7c1d6ece18d)
+
+------
+### CloudFront - Service Role
+* IAM role that allows CloudFormation to create/update/delete stack resources on your behalf
+* Give ability to users to create/update/delete the stack resources even if they don't have permissions to work with the resources in the stack
+* Use cases:
+  * You want to achieve the least privilege principle
+  * But you don't want to give the user all the required permissions to create the stack resources
+* User must have iam:PassRole permissions
+
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/58513d25-4040-4319-a4d3-fbfdfeacce3b)
+
+------
+### CloudFront - Capabilities
+* CAPABILITY_NAMED_IAM and CAPABILITY_IAM
+  * Necessary to enable when you CloudFormation template is creating or updating IAM resources (IAM User, Role, Group, Policy, Access Keys, Instance Profile...)
+  * Specify CAPABILITY_NAMED_IAM if the resources are named
+* CAPABILITY_AUTO_EXPAND
+  * Necessary when your CloudFormation template includes Macros or Nested Stacks (stacks within stacks) to perform dynamic transformations
+  * You're acknowledging that your template may change before deploying
+* InsufficientCapabilitiesException
+  * Exception that will be thrown by CloudFormation if the capabilities haven't been acknowledged when deploying a template (security measure)
+
+------
+### CloudFront - Deletion Policy
+* DeletionPolicy:
+* Control what happens when the CloudFormation template is deleted or when a resource is removed from a CloudFormation template
+* Extra safety measure to preserve and backup resources
+* Default DeletionPolicy=Delete
+* :⚠️ Delete won't work on an S3 bucket if the bucket is not empty
