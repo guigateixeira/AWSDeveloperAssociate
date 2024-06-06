@@ -2640,8 +2640,71 @@ Creating a second env
 
 ------
 ### CloudFront - Deletion Policy
+#### Delete
 * DeletionPolicy:
-* Control what happens when the CloudFormation template is deleted or when a resource is removed from a CloudFormation template
-* Extra safety measure to preserve and backup resources
+  * Control what happens when the CloudFormation template is deleted or when a resource is removed from a CloudFormation template
+  * Extra safety measure to preserve and backup resources
 * Default DeletionPolicy=Delete
-* :⚠️ Delete won't work on an S3 bucket if the bucket is not empty
+  * ⚠️ Delete won't work on an S3 bucket if the bucket is not empty
+
+#### Retain
+* DeletionPolicy=Retain:
+  * Specify on resources to preserve in case of CloudFormation deletes
+* Works with any resources
+
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/e7ac49b9-0b68-47bc-9ecb-53cf169e7e92)
+
+#### Snapshot
+* DeletionPolicy=Snapshot
+* Create one final snapshot before deleting the resource
+* Examples of supported resources:
+  * EBS Volume, ElastiCache Cluster, ElastiCache ReplicationGroup
+  * RDS DBInstance, RDS DBCluster, Redshift Cluster, Neptune DBCluster, DocumentDB DBCluster
+
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/204d9e44-9ad4-42ca-ab8d-3f22ddcb911a)
+
+------
+### CloudFront - Stack Policies
+* During a CloudFormation Stack update, all update actions are allowed on all resources (default).
+* A Stack Policy is a JSON document that defines the update actions that are allowed on specific resources during Stack updates.
+* Protect resources from unintentional updates.
+* When you set a Stack Policy, all resources in the Stack are protected by default.
+* Specify an explicit ALLOW for the resources you want to be allowed to be updated.
+
+**To prevent accidental deletes on a CloudFormation Stack, use TerminationProtection**
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/c7fc97e4-ce5d-4b0e-9ce7-95b78a1b5682)
+
+------
+### CloudFront - Custom Resources
+* Used to
+  * define resources not yet supported by CloudFormation
+  * define custom provisioning logic for resources can that be outside of CloudFormation (on-premises resources, 3ra party resources...)
+  * have custom scripts run during create / update / delete through Lambda functions (running a Lambda function to empty an S3 bucket before being deleted)
+* Defined in the template using AWS::CloudFormation::CustomResource or Custom::MyCustomResource TypeName (recommended)
+* Backed by a Lambda function (most common) or an SNS topic.
+
+#### Defining a Custom Resource
+* Service Token specifies where CloudFormation sends requests to, such as Lambda ARN or SINS ARN (required & must be in the same region)
+* Input data parameters (optional)
+
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/6f82c773-e7a6-44e1-bbf1-1635087df49c)
+
+#### Use case - Delete content from an S3 bucket
+* You can't delete a non-empty S3 bucket
+* To delete a non-empty 53 bucket, you must first delete all the objects inside it
+* We can use a custom resource to empty an 53 bucket before it gets deleted by CloudFormation
+
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/b0f51161-c199-4241-940c-fdda865d1a86)
+
+------
+### CloudFront - StackSets
+* Create, update, or delete stacks across multiple accounts and regions with a single operation/template
+* Target accounts to create, update, delete stack instances from StackSets
+* When you update a stack set, all associated stack instances are updated throughout all accounts and regions
+* Can be applied into all accounts of an AWS Organization
+* Only Administrator account (or Delegated Administrator) can create StackSets
+
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/4290c723-7412-435d-b42d-606ad8892a13)
+
+---------
+## Section 16: AWS Integration & Messaging - SQS, SNS & Kinesis
