@@ -2388,6 +2388,7 @@ Creating a second env
 4. perform a CNAME swap. (blue/green) or Route 53 update, confirm working
 5. Terminate the old environment (RDS won't be deleted)
 6. Delete CloudFormation stack (in DELETE_FAILED state)
+
 ![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/e184ce25-16b4-4922-90ac-6d489090b133)
 
 ---------
