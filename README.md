@@ -2808,4 +2808,141 @@ Creating a second env
 ![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/f692c917-3eb1-4c05-90e5-157e3406d434)
 
 -----
-### SQS - Delau Queues
+### SQS - Delay Queues
+* Delay a message (consumers don't see it immediately) up to 15 minutes
+* Default is 0 seconds (message is available right away)
+* Can set a default at queue level
+* Can override the default on send using the DelaySeconds parameter
+
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/f0b54873-98ca-4270-b20b-fcc23ab69623)
+
+------
+### SQS - Long Polling
+* When a consumer requests messages from the queue, it can opitionally "wait" for messages to arrive if there are none in the queue
+* This is called Long Polling
+* LongPolling decreases the number of APl calls made to SQS while increasing the efficiency and decreasing the latency of your application.
+* The wait time can be between I sec to 20 sec (20 sec preferable)
+* Long Polling is preferable to Short Polling
+* Long polling can be enabled at the queue level or at the API level using ReceiveMessageWaitTimeSeconds
+
+### SQL Extended Client
+* Message size limit is 256KB, using the SQS Extended Client you can send larger messages.
+
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/531fa0b1-54a0-4824-89e3-04b5eb284aff)
+
+### Must know API
+* CreateQueue (MessageRetentionPeriod), DeleteQueue
+* PurgeQueue: delete all the messages in queue
+* SendMessage (DelaySeconds), ReceiveMessage, DeleteMessage
+* MaxNumberOfMessages: default 1, max 10 (for ReceiveMessage API)
+* ReceiveMessage Wait TimeSeconds: Long Polling
+* ChangeMessage Visibility: change the message timeout
+
+* Batch APIs for SendMessage, DeleteMessage, ChangeMessage Visibility helps decrease your costs
+
+------
+### SQS - FIFO Queues
+* FIFO = First In First Out
+* Limited throughput: 300 msg/s without batching, 3000 msg/s with
+* Exactly-once send capability (by removing duplicates)
+* Messages are processed in order by the consumer
+
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/37e108ce-0a4d-4a48-900a-4ff9bec1d376)
+
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/62a47a5d-c9f4-4992-aa73-46386bd4ab82)
+
+#### SQS FIFO - Deduplication
+* De-duplication interval is 5 minutes
+* Two de-duplication methods:
+  * Content-based deduplication: will do a SHA-256 hash of the message body
+  * Explicitly provide a Message Deduplication ID
+
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/3cc44da1-96a4-4f8a-8555-40a48c529e74)
+
+#### SQS FIFO - Message Grouping
+* If you specify the same value of MessageGroupD in an SQS FIFO queue, you can only have one consumer, and all the messages are in order
+* To get ordering at the level of a subset of messages, specify different values for Message GroupID
+  * Messages that share a common Message Group ID will be in order within the group
+  * Each Group ID can have a different consumer (parallel processing!)
+  * Ordering across groups is not guaranteed
+
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/4f717a1e-caf3-43e6-adcd-66999b86b754)
+
+------
+### Amazon SNS
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/4a73fda9-a7e3-46b4-87ba-673eb42a0a40)
+
+* The "event producer" only sends message to one SNS topic.
+* As many "event receivers" (subscriptions) as we want to listen to the SINS topic notifications.
+* Each subscriber to the topic will get all the messages (note: new feature to filter messages).
+* Up to 12,500,000 subscriptions per topic.
+* 100,000 topics limit.
+
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/e8a6b8b8-f856-47c6-8452-d736e4c9c6f4)
+
+Many AWS Services can send data directly to SNS for notifications.
+
+
+#### How to publish
+* Topic Publish (using the SDK)
+  * Create a topic
+  * Create a subscription (or many)
+  * Publish to the topic
+* Direct Publish (for mobile apps SDK)
+  * Create a platform application
+  * Create a platform endpoint
+  * Publish to the platform endpoint
+  * Works with Google GCM, Apple APNS, Amazon ADM ...
+
+#### SNS - Security
+* Encryption:
+  * In-flight encryption using HTTPS API
+  * At-rest encryption using KMS keys
+  * Client-side encryption if the client wants to perform encryption/decryption itself
+* Access Controls: IAM policies to regulate access to the SNS API
+* SNS Access Policies (similar to S3 bucket policies)
+  * Useful for cross-account access to SNS topics
+  * Useful for allowing other services ( S3...) to write to an SNS topic
+ 
+------
+### SNS + SQS: Fan Out
+* Push once in SNS, receive in all SQS queues that are subscribers
+* Fully decoupled, no data loss
+* SQS allows for: data persistence, delayed processing and retries of work
+* Ability to add more SQS subscribers over time
+* Make sure your SQS queue access policy allows for SNS to write
+* Cross-Region Delivery: works with SQS Queues in other regions
+
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/8d08d104-e367-4e95-898a-21197c06170b)
+
+#### S3 Events to multiple queues
+* For the same combination of: event type (e.g, object create) and prefix (e.g. images/) you can only have one S3 Event rule
+* If you want to send the same 53 event to many SQS queues, use fan-out
+
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/bc84cd4e-c3dc-48c2-9d29-eb6dbc34b798)
+
+#### SNS Fifo + SQS Fifo: Fan Out
+* In case you need fan out + ordering + deduplication
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/78fe4ded-0af9-4309-be48-2010251bb094)
+
+#### SNS - Message Filtering
+* JSON policy used to filter messages sent to SNS topic's subscriptions.
+* If a subscription doens't have a filter policy, it receives every message.
+
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/73d78ba1-b0c0-4b30-9b6d-a67e5f4ed765)
+
+
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/aa632e80-134b-486e-8f7d-97def6d2a877)
+
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/dfcbc4bb-62ae-494f-8c90-244accd1378a)
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/bf80b175-30b3-4a3a-b011-72a4a64e38e5)
+
+------
+### Kinesis
+* Makes it easy to collect, process, and analyze streaming data in real-time
+* Ingest real-time data such as: Application logs, Metrics, Website clickstreams, IoT telemetry data...
+* Kinesis Data Streams: capture, process, and store data streams
+* Kinesis Data Firehose: load data streams into AWS data stores
+* Kinesis Data Analytics: analyze data streams with SQL or Apache Flink
+* Kinesis Video Streams: capture, process, and store video streams
+
