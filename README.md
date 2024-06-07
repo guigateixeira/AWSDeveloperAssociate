@@ -2709,3 +2709,103 @@ Creating a second env
 
 ---------
 ## Section 16: AWS Integration & Messaging - SQS, SNS & Kinesis
+### Queues Overview
+
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/af334add-6c21-4fbd-b6d6-800f498fdf53)
+
+### Amazon SQS - Standard Queue
+* Fully managed service, used to decouple applications
+* Attributes:
+  * Unlimited throughput, unlimited number of messages in queue
+  * Default retention of messages: 4 days, maximum of 14 days
+  * Low latency (<10 ms on publish and receive)
+  * Limitation of 256KB per message sent
+* Can have duplicate messages (at least once delivery, occasionally)
+* Can have out of order messages (best effort ordering)
+
+#### SQS - Producing Messages
+* Produced to SQS using the SDK (SendMessage API)
+* The message is persisted in SQS until a consumer deletes it
+* Message retention: default 4 days, up to 14 days
+* Example: send an order to be processed
+  * Order id
+  * Customer id
+  * Any attributes you want
+* SQS standard has unlimited throughput
+
+#### SQS - Consuming Messages
+* Consumers (running on EC2 intances, servers, or AWS Lambda)...
+* Poll SQS for messages (receive up to 10 messages at a time)
+* Process the messages (example: insert the message into an RDS database)
+* Delete the messages using the DeleteMessage API
+
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/9f874049-d370-4c4b-8e23-47f666c28a81)
+
+#### SQS - Multiple EC2 Intances Consumers
+* Consumers receive and process messages in parallel
+* At least once delivery
+* Best-effort message ordering
+* Consumers delete messages after processing them
+* We can scale consumers horizontally to improve throughput of processing
+
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/cc04acd5-fcb3-42c6-94d2-531e9d1d2a93)
+
+#### SQS with Auto Scaling Group
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/c9be2553-6c65-4f88-b32c-757136ea4e9e)
+
+#### Amazon SQS - Security
+* Encryption:
+  * In-flight encryption using HTTPS API
+  * At-rest encryption using KMS keys
+  * Client-side encryption if the client wants to perform encryption/decryption itself
+* Access Controls: AM policies to regulate access to the SQS API
+* SQS Access Policies (similar to S3 bucket policies)
+  * Useful for cross-account access to SQS queues
+  * Useful for allowing other services (SNS, S3...) to write to an SQS queue
+
+-----
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/e7502e13-97b9-432b-9a62-dc49b28a6eba)
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/f0c6c1fd-4f8b-4694-806f-b484dc19b09c)
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/573c9ef9-2727-4311-9fe3-c1cea9e93694)
+-----
+### SQS - Queue Access Policy
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/70cb4b05-d293-4295-9920-23d4d49806ea)
+
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/ecfdbe59-e13e-4bbb-9ede-6b3bd880169e)
+
+-----
+### SQS - Message Visibility Timeout
+* After a message is polled by a consumer, it becomes invisible to other consumers
+* By default, the "message visibility timeout" is 30 seconds
+* That means the message has 30 seconds to be processed
+* After the message visibility timeoyt is over, the message is "visible" in SQS
+* If a message is not processed within the visibility timeout, it will be processed twice
+* A consumer could call the ChangeMessage Visibility APl to get more time
+* If visibility timeout is high (hours), and consumer crashes, re-processing will take time
+* If visibility timeout is too low (seconds), we may get duplicates
+
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/c9d5934e-9a7c-4633-87ed-05b68bf71c67)
+
+-----
+### SQS - Dead Letter Queues (DLQ)
+* If a consumer fails to process a message within the Visibility Timeout, the message goes back to the queue
+* We can set a threshold of how many times a message can go back to the queue
+* After the MaximumReceives threshold is exceeded, the message goes into a dead letter queue (DLQ)
+* Useful for debugging!
+* DLQ of a FIFO queue must also be a FIFO queue
+* DLQ of a Standard queue must also be a Standard queue
+* Make sure to process the messages in the DLQ before they expire:
+  * Good to set a retention of 14 days in the DQL
+
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/6b660691-8e7c-47cb-853a-fafa5ce4ddcb)
+
+#### SQS DLQ - Redrive to Source
+* Feature to help consume messages in the DLQ to understand what is wrong with them.
+* When our code is fixed, we can redrive the messages from the DLQ back into the source queue (or any other queue) in batches without writing custom code.
+
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/6c0504c5-6940-4063-99c8-936bb67c8e8c)
+
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/f692c917-3eb1-4c05-90e5-157e3406d434)
+
+-----
+### SQS - Delau Queues
