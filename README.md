@@ -2946,3 +2946,220 @@ Many AWS Services can send data directly to SNS for notifications.
 * Kinesis Data Analytics: analyze data streams with SQL or Apache Flink
 * Kinesis Video Streams: capture, process, and store video streams
 
+------
+### Kinesis Data Streams
+
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/5c29208b-3f62-4a1a-8f22-0c1406273c5f)
+
+* Retention between | day to 365 days
+* Ability to reprocess (replay) data
+* Once data is inserted in Kinesis, it can't be deleted (immutability)
+* Data that shares the same partition goes to the same shard (ordering)
+* Producers: AWS SDK, Kinesis Producer Library (KPL), Kinesis Agent
+* Consumers:
+  * Write your own: Kinesis Client Library (KCL), AWS SDK
+  * Managed: AWS Lambda, Kinesis Data Firehose, Kinesis Data Analytics
+
+### Kinesis Data Streams - Capacity Modes
+* Provisioned mode:
+  * You choose the number of shards provisioned, scale manually or using API
+  * Each shard gets IMB/s in (or 1000 records per second)
+  * Each shard gets 2MB/s out (classic or enhanced fan-out consumer)
+  * You pay per shard provisioned per hour
+* On-demand mode:
+  * No need to provision or manage the capacity
+  * Default capacity provisioned (4 MB/s in or 4000 records per second)
+  * Scales automatically based on observed throughput peak during the last 30 days
+  * Pay per stream per hour & data in/out per GB
+
+### Kinesis Data Streams Security
+* Control access / authorization using IAM policies
+* Encryption in flight using HTTPS endpoints
+* Encryption at rest using KMS
+* You can implement encryption/decryption of data on client side (harder)
+* VPC Endpoints available for Kinesis to access within VPC
+* Monitor API calls using CloudTrail
+
+------
+### Kinesis Producers
+* Puts data records into data streams
+* Data record consists of:
+  * Sequence number (unique per partition-key within shard)
+  * Partition key (must specify while put records into stream)
+  * Data blob (up to | MB)
+* Producers:
+  * AWS SDK: simple producer
+  * Kinesis Producer Library (KPL): C++, Java, batch, compression, retries
+  * Kinesis Agent: monitor log files
+* Write throughput: 1 MB/sec or 1000 records/sec per shard
+* PutRecord API
+* Use batching with PutRecords API to reduce cost & increase throughput
+
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/236683db-620a-4d95-b2cf-0b6b20a95574)
+
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/fcd01175-3c58-4b33-8dfc-e6457c64b1bc)
+
+------
+### Kinesis Consumers
+* Get data records from data streams and process them
+* AWS Lambda
+* Kinesis Data Analytics
+* Kinesis Data Firehose
+* Custom Consumer (AWS SDK) - Classic or Enhanced Fan-Out
+* Kinesis Client Library (KCL): library to simplify reading from data stream
+
+#### Kinesis Consumers - Custom Consumer
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/4072b9a9-22c1-43a7-8e7b-15f6dbe8b415)
+
+* Shared (Classic) Fan-out Consumer - pull
+  * Low number of consuming applications
+  * Read throughput: 2 MB/sec per shard across all consumers
+  * Max. 5 GetRecords API calls/sec
+  * Latency ~200 ms
+  * Minimize cost ($)
+  * Consumers poll data from Kinesis using GetRecords APl call
+  * Returns up to 10 MB (then throttle for 5 seconds) or up to 10000 records
+* Enhanced Fan-out Consumer - push
+  * Multiple consuming applications for the same stream
+  * 2 MB/sec per consumer per shard
+  * Latency ~ 70 ms
+  * Higher costs ($$$)
+  * Kinesis pushes data to consumers over HTTP/2 (SubscribeToShard API)
+  * Soft limit of 5 consumer applications (KCL) per data stream (default)
+
+#### Kinesis Consumers - Lambda
+* Supports Classic & Enhanced fan-out consumers
+* Read records in batches
+* Can configure batch size and batch window
+* If error occurs, Lambda retries until succeeds or data expired
+* Can process up to 10 batches per shard simultaneously
+
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/1c2e0633-4699-46c8-b9e1-4d5b001f2482)
+
+-----
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/383f7aa2-98b1-4633-8ae2-a1be7128befa)
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/4885c601-e734-429c-9280-e0c1dab3e1cb)
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/5e27cbcf-bd7b-4547-8a4f-f64a15dbcd74)
+
+------
+### Kinesis Client Library (KCL)
+* A Java library that hekps read record from a Kinesis Data Stream with distributed applications sharing the read workload
+* Each shard is to be read by only one KCL instance
+  * 4 shards = max. 4 KCL instances
+  * 6 shards = max. 6 KCL instances
+* Progress is checkpointed into DynamoDB (needs IAM access)
+* Track other workers and share the work amongst shards using DynamoDB
+* KCL can run on EC2, Elastic Beanstalk, and on-premises
+* Records are read in order at the shard level
+* Versions:
+  * KCL 1.x (supports shared consumer)
+  * KCL 2.x (supports shared & enhanced fan-out consumer)
+
+#### KCL - 4 Shards
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/b4643996-bc9c-4f63-920d-efe9b65acd0e)
+
+#### KCL - 6 Shards, Scaling Kinesis
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/a8dd4f7e-0c13-48ef-9c7d-b548cb5ff4cf)
+
+------
+### Kinesis Operations
+#### Shard Splitting
+* Used to increase the Stream capacity (1 MB/s data in per shard)
+* Used to divide a "hot shard"
+* The old shard is closed and will be deleted once the data is expired
+* No automatic scaling (manually increase/decrease capacity)
+* Can't split into more than two shards in a single operation
+
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/f5540835-eec0-4089-aa4f-51993ee93b26)
+
+#### Merging Shards
+* Decrease the Stream capacity and save costs
+* Can be used to group two shards with low traffic (cold shards)
+* Old shards are closed and will be deleted once the data is expired
+* Can't merge more than two shards in a single operation
+
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/87702e09-a95c-489a-8035-827f435b3634)
+
+------
+### Kinesis Data Firehose
+* Fully Managed Service, no administration, automatic scaling, serverless
+  * AWS: Redshift / Amazon S3 / OpenSearch
+  * 3rd party partner: Splunk / MongoDB / DataDog / NewRelic / ...
+  * Custom: send to any HT TP endpoint
+* Pay for data going through Firehose
+* Near Real Time
+  * Buffer interval: 0 seconds (no buffering) to 900 seconds
+  * Buffer size: minimum IMB
+* Supports many data formats, conversions, transformations, compression
+* Supports custom data transformations using AWS Lambda
+* Can send failed or all data to a backup S3 bucket
+
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/55ddd9d3-71fa-4f7d-8a38-66ad4543a2f3)
+
+#### Kinesis Data Streams vs Firehose
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/fd95ccd9-6302-43db-9566-bf09f4763c0f)
+
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/ebb384c0-1a91-4ac1-aebd-bb76eaac88ad)
+
+------
+### Kinesis Data Analytics
+* Real-time analytics on Kinesis Data Streams & Firehose using SQL
+* Add reference data from Amazon S3 to enrich streaming data
+* Fully managed, no servers to provision
+* Automatic scaling
+* Pay for actual consumption rate
+* Output:
+  * Kinesis Data Streams: create streams out of the real-time analytics queries
+  * Kinesis Data Firehose: send analytics query results to destinations
+* Use cases:
+  * Time-series analytics
+  * Real-time dashboards
+  * Real-time metrics
+
+#### Kinesis Data Analytics for Apache Flink
+* Use Flink (Java, Scala or SQL) to process and analyze streaming data
+* Run any Apache Flink application on a managed cluster on AWS
+  * provisioning compute resources, parallel computation, automatic scaling
+  * application backups (implemented as checkpoints and snapshots)
+  * Use any Apache Flink programming features
+  * Flink does not read from Firehose (use Kinesis Analytics for SQL instead)
+
+-----
+### Data Ordering
+#### Ordering data into Kinesis
+* Imagine you have 100 trucks the road sending heroes positions regularly into AWS.
+* You want to consume the data in order for each truck, so that you can track their movement accurately.
+* How should you send that data into Kinesis?
+* Answer: send using a "Partition Key" value of the "truck_id"
+* The same key will always go to the same shard
+
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/104a730c-42b8-4559-a4fa-61f00528297d)
+
+#### Ordering data into SQS
+* For SQS standard, there is no ordering.
+* For SQS FIFO, if you don't use a Group ID, messages are consumed in the order they are sent, with only one consumer
+
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/20e1c9e7-59c6-48a2-9746-fa2164bd56e3)
+
+* You want to scale the number of consumers, but you want messages to be "grouped" when they are related to each other
+* Then you use a Group ID (similar to Partition Key in Kinesis)
+
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/0a15db93-c291-41dd-997d-288a1b9885d8)
+
+#### Kinesis vs SQS ordering
+* Let's assume 100 trucks, 5 kinesis shards, I SQS FIFO
+* Kinesis Data Streams:
+  * On average you'll have 20 trucks per shard
+  * Trucks will have their data ordered within each shard
+  * The maximum amount of consumers in parallel we can have is 5
+  * Can receive up to 5 MB/s of data
+* SQS FIFO
+  * You only have one SQS FIFO queue
+  * You will have 100 Group ID
+  * You can have up to 100 Consumers (due to the 100 Group ID)
+  * You have up to 300 messages per second (or 3000 if using batching)
+
+-----
+### SQS vs SNS vs Kinesis
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/eff1a3de-c964-4810-b1a9-aa16b7872733)
+
