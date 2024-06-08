@@ -1,3 +1,4 @@
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/33a68411-3225-442c-b402-06ddb5d93517)
 # AWS Developer Associate
 
 ## Section 3: EC2 Instance Storage
@@ -2066,10 +2067,15 @@ Examples:
 -----
 ### Amazon ECS - Solutions Architectures
 **ECS Tasks involving Event Bridge**
+
 ![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/e22611cc-0053-48c7-ab93-4cde2327b96d)
+
 **ECS Tasks involving Event Bridge Schedule**
+
 ![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/2ef9a32b-108b-4b1a-ae07-496c9b48d15b)
+
 **ECS SQS Queue Example**
+
 ![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/60189841-0e2d-4bfa-af2d-0c6c380e1fed)
 
 -----
