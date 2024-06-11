@@ -3169,3 +3169,18 @@ Many AWS Services can send data directly to SNS for notifications.
 ### SQS vs SNS vs Kinesis
 ![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/eff1a3de-c964-4810-b1a9-aa16b7872733)
 
+
+---------
+## Section 17: AWS Monitoring - CloudWatch, X-Ray and CloudTrail
+### Monitoring in AWS
+* AWS CloudWatch:
+  * Metrics: Collect and track key metrics
+  * Logs: Collect, monitor, analyze and store log files
+  * Events: Send notifications when certain events happen in your AWS
+  * Alarms: React in real-time to metrics / events
+* AWS X-Ray:
+  * Troubleshooting application performance and errors
+  * Distributed tracing of microservices
+* AWS CloudTrail:
+  * Internal monitoring of API calls being made
+  * Audit changes to AWS Resources by your users
