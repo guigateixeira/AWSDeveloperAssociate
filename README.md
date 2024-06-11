@@ -1,4 +1,3 @@
-![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/33a68411-3225-442c-b402-06ddb5d93517)
 # AWS Developer Associate
 
 ## Section 3: EC2 Instance Storage
@@ -3041,6 +3040,7 @@ Many AWS Services can send data directly to SNS for notifications.
 * Can process up to 10 batches per shard simultaneously
 
 ![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/1c2e0633-4699-46c8-b9e1-4d5b001f2482)
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/33a68411-3225-442c-b402-06ddb5d93517)
 
 -----
 ![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/383f7aa2-98b1-4633-8ae2-a1be7128befa)
