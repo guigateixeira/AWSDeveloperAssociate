@@ -3184,3 +3184,6 @@ Many AWS Services can send data directly to SNS for notifications.
 * AWS CloudTrail:
   * Internal monitoring of API calls being made
   * Audit changes to AWS Resources by your users
+
+------
+### CloudWatch Metrics
