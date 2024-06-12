@@ -3205,3 +3205,16 @@ Many AWS Services can send data directly to SNS for notifications.
 
 ----
 ### CloudWatch Custom Metrics
+* Possibility to define and send your own custom metrics to CloudWatch
+* Example: memory (RAM) usage, disk space, number of logged in users...
+* Use API call PutMetricData
+* Ability to use dimensions (attributes) to segment metrics
+  * Instance.id
+  * Environment.name
+* Metric resolution (StorageResolution APl parameter - two possible values):
+  * Standard: 1 minute (60 seconds)
+  * High Resolution: 1/5/10/30 second(s) - Higher cost
+* Important: Accepts metric data points two weeks in the past and two hours in the future (make sure to configure your EC2 instance time correctly).
+
+----
+### CloudWatch Logs
