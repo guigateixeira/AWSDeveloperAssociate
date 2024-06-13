@@ -3406,4 +3406,80 @@ Many AWS Services can send data directly to SNS for notifications.
 
 -----
 ### X-Ray
+* Debugging in Production, the good old way:
+  * Test locally
+  * Add log statements everywhere
+  * Re-deploy in production
+* Log formats differ across applications using CloudWatch and analytics is hard.
+* Debugging: monolith "easy", distributed services "hard"
+* No common views of your entire
 
+<img width="765" alt="image" src="https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/8e0a3c8c-0cf7-496c-b316-1c770374e094">
+
+#### X-Ray Advantages
+* Troubleshooting performance (bottlenecks)
+* Understand dependencies in a microservice architecture
+* Pinpoint service issues
+* Review request behavior
+* Find errors and exceptions
+* Are we meeting time SLA?
+* Where I am throttled?
+* Identify users that are impacted
+
+#### X-Ray Leverages Tracing
+* Tracing is an end to end way to following a "request"
+* Each component dealing with the request adds its own "trace"
+* Tracing is made of segments (+ sub segments)
+* Annotations can be added to traces to provide extra-information
+* Ability to trace:
+  * Every request
+  * Sample request (as a % for example or a rate per minute)
+* X-Ray Security:
+  * IAM for authorization
+  * KMS for encryption at rest
+
+#### How to enable X-Ray
+1) Your code (Java, Python, Go, Nodejs, NET) must import the AWS X-Ray SDK
+* Very little code modification needed
+* The application SDK will then capture:
+  * Calls to AWS services
+  * НТТР / HTTPS requests
+  * Database Calls (MySQL, PostgreSQL, DynamoDB)
+  * Queue calls (SQS)
+2) Install the X-Ray daemon or enable X-Ray AWS Integration
+* X-Ray daemon works as a low level UDP packet interceptor (Linux / Windows / Mac...)
+* AWS Lambda / other AWS services already run the X-Ray daemon for you
+* Each application must have the IAM rights to write data to X-Ray
+
+<img width="296" alt="image" src="https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/b0281709-8297-4292-874b-c727b9a3ea44">
+
+<img width="191" alt="image" src="https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/e8fab7a3-0c07-4197-9304-8e41300eaa87">
+
+-----
+### X-Ray: Instrumentation and Concepts
+* Instrumentation means the measure of product's performance, diagnose errors, and to write trace information.
+* 10 instrument your application code, you use the X-Ray SDK
+* Many SDK require only configuration changes
+* You can modify your application code to customize and annotation the data that the SDK sends to X-Ray, using interceptors, filters, handlers, middleware...
+
+<img width="551" alt="image" src="https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/194d1302-942f-4898-9f7d-b1f5eb6ebe74">
+
+#### X-Ray Concepts
+* Segments: each application / service will send them
+* Subsegments: if you need more details in your segment
+* Trace: segments collected together to form an end-to-end trace
+* Sampling: decrease the amount of requests sent to X-Ray, reduce cost
+* Annotations: Key Value pairs used to index traces and use with filters
+* Metadata: Key Value pairs, not indexed, not used for searching
+* The X-Ray daemon / agent has a config to send traces cross account:
+  * make sure the IAM permissions are correct - the agent will assume the role
+  * This allows to have a central account for all your application tracing
+
+#### X-Ray Sampling Rules
+* With sampling rules, you control the amount of data that you record
+* You can modify sampling rules without changing your code
+* By default, the X-Ray SDK records the first request each second, and five percent of any additional requests.
+* One request per second is the reservoir, which ensures that at least one trace is recorded each second as long the service is serving requests.
+
+##### Custom Sampling Rules
+* You can create your own rules with the reservoir and rate.
