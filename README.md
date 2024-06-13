@@ -3483,3 +3483,35 @@ Many AWS Services can send data directly to SNS for notifications.
 
 ##### Custom Sampling Rules
 * You can create your own rules with the reservoir and rate.
+
+-----
+### X-Ray APIs
+#### Write APIs
+* PutTraceSegments: Uploads segment documents to AWS X-Ray
+* PutTelemetryRecords: Used by the AWS X-Ray daemon to upload telemetry.
+  * SegmentsReceivedCount, SegmentsRejectedCounts, BackendConnectionErrors.
+* GetSamplingRules: Retrieve all sampling rules (to know what/when to send)
+* GetSampling Targets & GetSamplingStatisticSummaries: advanced
+* The X-Ray daemon needs to have an IAM policy authorizing the correct API calls to function correctly
+
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/a3732a2b-c8ea-41cb-b1ab-d4340aee3cd3)
+
+#### Read APIs
+* GetServiceGraph: main graph.
+* BatchGet Traces: Retrieves a list of traces specified by ID. Each trace is a collection of segment documents that originates from a single request.
+* Get TraceSummaries: Retrieves IDs and annotations for traces available for appocial fiter: get the tur traces, pass the trace Ds to BatchGet Traces.
+* Get TraceGraph: Retrieves a service graph for one or more specific trace IDs.
+
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/21ba83f8-7a70-4728-9fbc-f73a6c9ee9da)
+
+-----
+### X-Ray with Beanstalk
+* AWS Elastic Beanstalk platforms include the X-Ray daemon
+* You can run the daemon by setting an option in the Elastic Beanstalk console or with a configuration file (in .ebextensions/xray-daemon.config)
+* Make sure to give your instance profile the correct lAM permissions so that the X-Ray daemon can function correctly
+* Then make sure your application code is instrumented with the X-Ray SDK
+* Note: The X-Ray daemon is not provided for Multicontainer Docker
+
+-----
+### X-Ray & ECS
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/84279b02-3a6c-40ea-9e4c-eb21f6309dc6)
