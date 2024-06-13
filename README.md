@@ -3218,3 +3218,192 @@ Many AWS Services can send data directly to SNS for notifications.
 
 ----
 ### CloudWatch Logs
+* Log groups: arbitrary name, usually representing an application
+* Log stream: instances within application / log files / containers
+* Can define log expiration policies (never expire, 1 day to 10 years...)
+* CloudWatch Logs can send logs to:
+  * Amazon S3 (exports)
+  * Kinesis Data Streams
+  * Kinesis Data Firehose
+  * AWS Lambda
+  * OpenSearch
+* Logs are encrypted by default
+* Can setup KMS-based encryption with your own keys
+
+#### CloudWatch Logs - Sources
+* SDK, CloudWatch Logs Agent, Cloud Watch Unified Agent
+* Elastic Beanstalk: collection of logs from application
+* ECS: collection from containers
+* AWS Lambda: collection from function logs
+* VPC Flow Logs:VPC specific logs
+* API Gateway
+* Cloud Trail based on filter
+* Route53: Log DNS queries
+
+#### CloudWatch Insights
+<img width="752" alt="image" src="https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/524130c0-be51-4cac-94d3-3bf65515c480">
+
+* Search and analyze log data stored in CloudWatch Logs
+* Example: find a specific IP inside a log, count occurrences of "ERROR" in your logs...
+* Provides a purpose-built query language
+  * Automatically discovers fields from AWS services and JSON log events
+  * Fetch desired event fields, filter based on conditions, calculate aggregate statistics, sort events, limit number of events...
+  * Can save queries and add them to CloudWatch Dashboards
+* Can query multiple Log Groups in different AWS accounts
+* It's a query engine, not a real-time engine
+
+#### Logs Exports
+* To export logs to S3 is not real time, it can take up to 12 hours to do so. To export in real time use Subscription.
+
+#### CloudWatch Logs Subscription
+* Get a real-time log events from CloudWatch Logs for processing and analysis
+* Send to Kinesis Data Streams, Kinesis Data Firehose, or Lambda
+* Subscription Filter - filter which logs are events delivered to your destination
+
+<img width="956" alt="image" src="https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/16ccc02f-ec29-4b44-a3eb-333064a02b64">
+
+* **Cross-Account Subscription - send log events to resources in a different AWS account (KDS, KDF)**
+
+<img width="1039" alt="image" src="https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/835a6556-0e65-4ab1-9e8b-d2b25632f1d9">
+
+<img width="1056" alt="image" src="https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/65475912-0928-4f07-b27d-4035e1efa5bc">
+
+<img width="734" alt="image" src="https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/df298d6d-68f9-4eb2-83c0-4eec535587ae">
+
+----
+### CloudWatch Agent & CloudWatch Logs Agents
+#### CloudWatch Logs for EC2
+* By default, no logs from your EC2 machine will go to CloudWatch
+* You need to run a CloudWatch agent on EC2 to push the log files you want
+* Make sure IAM permissions are correct
+* The CloudWatch log agent can be setup on-premises too
+
+<img width="365" alt="image" src="https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/7449f343-c2ca-496d-9c52-21b3b3fea716">
+
+#### CloudWatch Logs Agent & Unified Agent
+* For virtual servers (EC2 instances, on-premise servers...)
+* CloudWatch Logs Agent
+  * Old version of the agent
+  * Can only send to CloudWatch Logs
+* CloudWatch Unified Agent
+  * Collect additional system-level metrics such as RAM, processes, etc...
+  * Collect logs to send to CloudWatch Logs
+  * Centralized configuration using SSM Parameter Store
+
+#### CloudWatch Unified Agent - Metrics
+* Collected directly on your Linux server / EC2 instance
+* CPU (active, guest, idle, system, user, steal)
+* Disk metrics (free, used, total), Disk 1O (writes, reads, bytes, iops)
+* RAM (free, inactive, used, total, cached)
+* Netstat (number ofTCP and UDP connections, net packets, bytes)
+* Processes (total, dead, bloqued, idle, running, sleep)
+* Swap Space (free, used, used %)
+* Reminder: out-of-the box metrics for EC2 - disk, CPU, network (high level)
+
+----
+### CloudWatch Logs Metric Filter
+* CloudWatch Logs can use filter expressions
+  * For example, find a specific IP inside of a log
+  * Or count occurrences of "ERROR"' in your logs
+  * Metric filters can be used to trigger alarms
+* Filters do not retroactively filter data. Filters only publish the metric data points for events that happen after the filter was created.
+* Ability to specify up to 3 Dimensions for the Metric Filter (optional)
+
+<img width="886" alt="image" src="https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/c58fa14f-f4fc-4ff5-9133-4b9f67b7f4ed">
+
+<img width="874" alt="image" src="https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/7038f957-48d0-474a-ab21-7435120a94e1">
+<img width="716" alt="image" src="https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/181c3245-aa16-41cf-abf9-bffb8512f350">
+
+----
+### CloudWatch Alarms
+* Alarms are used to trigger notifications for any metric
+* Various options (sampling, %, max, min, etc...)
+* Alarm States:
+  * OK
+  * INSUFFICIENT_DATA
+  * ALARM
+* Period:
+  * Length of time in seconds to evaluate the metric
+  * High resolution custom metrics: 10 sec, 30 sec or multiples of 60 sec
+
+#### CloudWatch Alarm Target
+* Stop, Terminate, Reboot, or Recover an EC2 Instance
+* Trigger Auto Scaling Action
+* Send notification to SNS (from which you can do pretty much anything)
+
+#### CloudWatch Alarm - Composite Alarms
+* CloudWatch Alarms are on a single metric
+* Composite Alarms are monitoring the states of multiple other alarms
+* AND and OR conditions
+* Helpful to reduce "alarm noise" by creating complex composite alarms
+
+<img width="821" alt="image" src="https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/6952afd3-cf8e-45e9-b516-503a83d6098c">
+
+#### EC2 Instance Recovery
+<img width="900" alt="image" src="https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/ca91e88c-4578-4533-af54-2769135fe1ee">
+
+<img width="838" alt="image" src="https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/83138bb9-aa99-4959-b1c9-050618fad1e0">
+<img width="679" alt="image" src="https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/da2472dc-1199-4afe-801b-e1dea4580bfa">
+<img width="849" alt="image" src="https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/a90b492e-5d9c-40f1-8195-8dd15b26fa10">
+
+-----
+### CloudWatch Synthetics
+#### CloudWatch Synthetics Canary
+* Configurable script that monitor your APls, URLs, Websites, ...
+* Reproduce what your customers do programmatically to find issues before customers are impacted
+* Checks the availability and latency of your endpoints and can store load time data and screenshots of the UI
+* Integration with CloudWatch Alarms
+* Scripts written in Node.js or Python
+* Programmatic access to a headless Google Chrome browser
+* Can run once or on a regular schedule
+
+<img width="647" alt="image" src="https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/68234067-05ef-407a-8159-2abac15a78db">
+
+#### CloudWatch Synthetics Canary Blueprints
+* Heartbeat Monitor - load URL, store screenshot and an HTTP archive file
+* API Canary - test basic read and write functions of REST APIs
+* Broken Link Checker - check all links inside the URL that you are testing
+* Visual Monitoring - compare a screenshot taken during a canary run with a baseline screenshot
+* Canary Recorder - used with CloudWatch Synthetics Recorder (record your actions on a website and automatically generates a script for that)
+* GUI Workflow Builder - verifies that actions can be taken on your webpage (e.g., test a webpage with a login form)
+
+-----
+### Amazon EventBridge
+* Schedule: Cron Jobs (schedule scripts)
+
+<img width="821" alt="image" src="https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/bfff074c-6a5d-472a-8dbc-c9ee653fa1fc">
+
+* Event Pattern: Event rules to react to a service doing something
+
+<img width="865" alt="image" src="https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/1200799e-7438-42e4-881b-31f5786d0f7b">
+
+<img width="1044" alt="image" src="https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/bce5a182-bc7c-41fe-83fd-2d74c04c9326">
+
+<img width="912" alt="image" src="https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/3cb53e49-187b-4677-aad8-a8217e36dba3">
+
+* Event buses can be accessed by other AWS accounts using Resource-based Policies
+* You can archive events (all/filter) sent to an event bus (indefinitely or set period)
+* Ability to replay archived events
+
+#### Schema Registry
+* EventBridge can analyze the events in your bus and infer the schema
+* The Schema Registry allows you to generate code for your application, that will know in advance how data is structured in the event bus
+* Schema can be versioned
+
+#### Resource Based Policy
+* Manage permissions for a specific Event Bus
+* Example: allow/deny events from another AWS account or AWS region
+* Use case: aggregate all events from your AWS Organization in a single AWS account or AWS region
+
+<img width="1042" alt="image" src="https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/534ebb04-0082-4c28-9614-d8bfb57e5fab">
+
+<img width="702" alt="image" src="https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/2eb921e5-5e86-4b9f-8fe8-9cc021a7e1d7">
+<img width="983" alt="image" src="https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/19f1b4f6-96f5-49e7-9812-cdb0dd718fcc">
+
+-----
+### Amazon EventBridge - Multi-Account Aggregation
+<img width="1063" alt="image" src="https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/e555ccc1-0249-45b4-9439-d61bcdd45d52">
+
+-----
+### X-Ray
+
