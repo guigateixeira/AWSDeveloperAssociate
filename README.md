@@ -3515,3 +3515,91 @@ Many AWS Services can send data directly to SNS for notifications.
 -----
 ### X-Ray & ECS
 ![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/84279b02-3a6c-40ea-9e4c-eb21f6309dc6)
+
+-----
+### AWS Distro for OpenTelemetry
+* Secure, production-ready AWS-supported distribution of the open-source project OpenTelemetry project
+* Provides a single set of APls, libraries, agents, and collector services
+* Collects distributed traces and metrics from your apps
+* Collects metadata from your AWS resources and services
+* Auto-instrumentation Agents to collect traces without changing your code
+* Send traces and metrics to multiple AWS services and partner solutions
+  * X-Ray, CloudWatch, Prometheus...
+* Instrument your apps running on AWS (e.g., EC2, ECS, EKS, Fargate, Lambda) as well as on-premises
+* Migrate trom X-Kay to AWS Distro for lemeletry it you want to standardize with open-source APls trom lelemetry or send traces to multiple destinations simultaneosly
+
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/ec104461-7984-45e1-955f-fb63598a9132)
+
+-----
+### AWS CloudTrail
+* Provides governance, compliance and audit for your AWS Account
+* CloudTrail is enabled by default!
+* Get an history of events / API calls made within your AWS Account by:
+  * Console
+  * SDK
+  * CLI
+  * AWS Services
+* Can put logs from CloudTrail into CloudWatch Logs or 53
+* A trail can be applied to All Regions (default) or a single Region.
+* If a resource is deleted in AWS, investigate CloudTrail first
+
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/043078bc-533a-4da1-8b72-dd05414d6a57)
+
+#### CloudTrail Events
+* Management Events:
+  * Operations that are performed on resources in your AWS account
+  * Examples:
+    * Configuring security (IAM AttachRolePolicy)
+    * Configuring rules for routing data (Amazon EC2 CreateSubnet)
+    * Setting up logging (AWS CloudTrail CreateTrail)
+  * By default, trails are configured to log management events.
+  * Can separate Read Events (that don't modify resources) from Write Events (that may modify resources)
+* Data Events:
+  * By default, data events are not logged (because high volume operations)
+  * Amazon S3 object-level activity (ex: GetObject, DeleteObject, PutObject): can separate Read and Write Events
+  * AWS Lambda function execution activity (the Invoke API)
+* CloudTrail Insights Events:
+  * Enable CloudTrail Insights to detect unusual activity in your account:
+    * inaccurate resource provisioning
+    * hitting service limits
+    * Bursts of AWS IAM actions
+    * Gaps in periodic maintenance activity
+  * CloudTrail Insights analyzes normal management events to create a baseline
+  * And then continuously analyzes write events to detect unusual patterns
+    * Anomalies appear in the Cloud Trail console
+    * Event is sent to Amazon 53
+    * An EventBridge event is generated (for automation needs)
+
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/95805ef9-862f-4089-8cdd-1a189f97f57b)
+
+
+#### CloudTrail Events Retention
+* Events are stored for 90 days in Cloud Trail
+* To keep events beyond this period, log them to S3 and use Athena
+
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/360777f8-eb5b-49df-bfde-13529393414d)
+
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/85f90468-b492-444f-b6a6-52a5ea0300ea)
+
+-----
+### AWS CloudTrail - EventBridge Integration
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/1052a3c4-b2fc-4689-8bf5-d7ed899dd6b1)
+
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/6b4c789e-0e59-4a18-ad84-124d2c22f936)
+
+-----
+### AWS CloudTrail vs CloudWatch vs X-Ray
+* Cloud Trail:
+  * Audit API calls made by users / services / AWS console
+  * Useful to detect unauthorized calls or root cause of changes
+* CloudWatch:
+  * CloudWatch Metrics over time for monitoring
+  * CloudWatch Logs for storing application log
+  * CloudWatch Alarms to send notifications in case of unexpected metrics
+* X-Ray:
+  * Automated Trace Analysis & Central Service Map Visualization
+  * Latency, Errors and Fault analysis
+  * Request tracking across distributed systems
+
+---------
+## Section 18: AWS Serverless: Lambda
