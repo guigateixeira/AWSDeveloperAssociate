@@ -3664,4 +3664,58 @@ Many AWS Services can send data directly to SNS for notifications.
 * ALB can support multi header values (ALB setting)
 * When you enable multi-value headers, HTTP headers and query string parameters that are sent with multiple values are shown as arrays within the AWS Lambda event and response objects.
 
+--------
+### Lambda Asynchronous Invocations
+* S3, SNS, CloudWatch Events...
+* The events are placed in an Event Queue
+* Lambda attempts to retry on errors
+  * 3 tries total
+  * 1 minute wait after 1st, then 2 minutes wait
+* Make sure the processing is idempotent (in case of retries)
+* If the function is retried, you will see duplicate logs entries in CloudWatch Logs
+* Can define a DLQ (dead-letter queue) - SNS or SQS - for failed processing (need correct IAM permissions)
+* Asynchronous invocations allow you to speed up the processing if you don't need to wait for the result (ex: you need 1000 files processed)
+
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/21c7825e-5610-4f52-8c04-ad05c27ca19e)
+
+**Services**
+* Amazon Simple Storage Service (S3)
+* Amazon Simple Notification Service (SNS)
+* Amazon CloudWatch Events / EventBridge
+* AWS CodeCommit (CodeCommit Trigger: new branch, new tag, new push)
+* AWS CodePipeline (invoke a Lambda function during the pipeline, Lambda must callback)
+----- other -----
+* Amazon Cloud Watch Logs (log processing)
+* Amazon Simple Email Service
+* AWS CloudFormation
+* AWS Config
+* AWS IoT
+* AWS IoT Events
+
+--------
+### Lambda CloudWatch Events / EventBridge
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/d73b6d2c-a664-4d81-8970-582919e39c06)
+
+--------
+### Lambda S3 & Event Notifications
+* S3:ObjectCreated, S3:ObjectRemoved, S3:ObjectRestore, S3:Replication...
+* Object name filtering possible (*jpg)
+* Use case: generate thumbnails of images uploaded to S3
+* S3 event notifications typically deliver events in seconds but can sometimes take a minute or longer
+* Versioned osect at the same time it is possible that only a single event notification will be sent
+* If you want to ensure that an event notification is sent for every successful write, you can enable versioning on your bucket
+
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/172c6634-7a59-4996-b2de-1b224c7a7c2c)
+
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/ef7cc859-079f-4514-95e5-93275f180eae)
+
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/ad858fd2-fc60-4360-9307-cd504d13cb38)
+
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/86fd600d-003c-4328-b663-20b0bc4dbded)
+
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/e65a3cf7-f32c-483d-bec0-60bc76ecdc02)
+
+--------
+### Lambda Event Source Mapping
+
 
