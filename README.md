@@ -3620,5 +3620,48 @@ Many AWS Services can send data directly to SNS for notifications.
 
 ![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/b6a5140e-f3fb-41be-8dc1-8fd867b749f5)
 
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/b6361f80-e41f-4d8f-9da0-89340bebe9b1)
+
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/17e9511d-793c-4b4e-8518-09449ea348fa)
+
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/3468b918-efa6-49ca-a783-45154bc36b1c)
+
+--------
+### Lambda Synchronous Invocations
+* Synchronous: CLI, SDK, API Gateway, Application Load Balancer
+  * Results is returned right away
+  * Error handling must happen client side (retries, exponential backoff, etc...)
+ 
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/58521901-b3aa-4aaa-aa5c-6c3c7c8dccbb)
+
+**Services**
+* User Invoked:
+  * Elastic Load Balancing (Application Load Balancer)
+  * Amazon API Gateway
+  * Amazon CloudFront (Lambda@Edge)
+  * Amazon S3 Batch
+* Service Invoked:
+  * Amazon Cognito
+  * AWS Step Functions
+* Other Services:
+  * Amazon Lex
+  * Amazon Alexa
+  * Amazon Kinesis Data Firehose
+ 
+--------
+### Lambda & Application Load Balancer
+* To expose a Lambda function as an HTTP(S) endpoint...
+* You can use the Application Load Balancer (or an API Gateway)
+* The Lambda function must be registered in a target group
+
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/6cb98758-8f24-4e0c-83e6-9477be1137ca)
+
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/12c9df68-189c-4604-b25b-f2f31a5c894a)
+
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/27290370-04e0-4f2f-859d-275200f37dbb)
+
+#### ALB Multi-Header Values
+* ALB can support multi header values (ALB setting)
+* When you enable multi-value headers, HTTP headers and query string parameters that are sent with multiple values are shown as arrays within the AWS Lambda event and response objects.
 
 
