@@ -3603,3 +3603,22 @@ Many AWS Services can send data directly to SNS for notifications.
 
 ---------
 ## Section 18: AWS Serverless: Lambda
+### AWS Lambda
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/1cbd04a4-5165-4e40-9f44-db54b281867e)
+
+#### Benefits of AWS Lambda
+* Easy Pricing:
+  * Pay per request and compute time
+  * Free tier of 1,000,000 AWS Lambda requests and 400,000 GBs of compute time
+* Integrated with the whole AWS suite of services
+* Integrated with many programming languages
+* Easy monitoring through AWS Cloud Watch
+* Easy to get more resources per functions (up to 10GB of RAM!)
+* Increasing RAM will also improve CPU and network
+
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/da5b51fd-29b9-4b9a-a5b4-0e06e0b7efda)
+
+![image](https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/b6a5140e-f3fb-41be-8dc1-8fd867b749f5)
+
+
+
