@@ -3717,5 +3717,60 @@ Many AWS Services can send data directly to SNS for notifications.
 
 --------
 ### Lambda Event Source Mapping
+* Kinesis Data Streams
+* SQS & SQS FIFO queue
+* DynamoDB Streams
+* Common denominator: records need to be polled from the source
+* Your Lambda function is invoked synchronously
 
+<img width="496" alt="image" src="https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/da3f92e9-5b37-4dce-9b30-0e54afbe13dd">
 
+#### Streams & Lambda (Kinesis & DynamoDB)
+* An event source mapping creates an iterator for each shard, processes items in order
+* Start with new items, from the beginning or from timestamp
+* Processed items aren't removed from the stream (other consumers can read them)
+* Low traffic: use batch window to accumulate records before processing
+* You can process multiple batches in parallel
+  * Up to 10 batches per shard
+  * in-order processing is still guaranteed for each partition key
+
+<img width="689" alt="image" src="https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/78781c22-fa2b-4153-9885-2cbc74e6818d">
+
+##### Lambda Streams - Error Handling
+* By default, if your function returns an error, the entire batch is reprocessed until the function succeeds, or the items in the batch expire.
+* To ensure in-order processing, processing for the affected shard is paused until the error is resolved
+* You can configure the event source mapping to:
+   * discard old events
+   * restrict the number of retries
+   * split the batch on error (to work around Lambda timeout issues)
+* Discarded events can go to a Destination
+
+#### Event Source Mapping SQS & SQS FIFO
+* Event Source Mapping will poll SQS (Long Polling)
+* Specify batch size (I-10 messages)
+* Recommended: Set the queue visibility timeout to 6x the timeout of your Lambda function
+* To use a DLQ
+  * set-up on the SQS queue, not Lambda (DLQ for Lambda is only for async invocations)
+
+<img width="360" alt="image" src="https://github.com/guigateixeira/AWSDeveloperAssociate/assets/50753240/094f366a-7d05-4d1e-ac64-9e4b80bf030c">
+
+#### Queues & Lambda
+* Lambda also supports in-order processing for FIFO (first-in, first-out) queues, scaling up to the number of active message groups.
+* For standard queues, items aren't necessarily processed in order.
+* Lambda scales up to process a standard queue as quickly as possible. 
+* When an error occurs, batches are returned to the queue as individual items and might be processed in a different grouping than the original batch.
+* Occasionally, the event source mapping might receive the same item from the queue twice, even if no function error occurred.
+* Lambda deletes items from the queue after they're processed successfully.
+* You can configure the source queue to send items to a dead-letter queue if they can't be processed
+
+#### Lambda Event Mapper Scaling
+* Kinesis Data Streams & DynamoDB Streams:
+  * One Lambda invocation per stream shard
+  * If you use parallelization, up to 10 batches processed per shard simultaneously
+* SQS Standard:
+  * Lambda adds 60 more instances per minute to scale up
+  * Up to 1000 batches of messages processed simultaneously
+* SQS FIFO:
+  * Messages with the same GroupID will be processed in order
+  * The Lambda function scales to the number of active message groups
+ 
